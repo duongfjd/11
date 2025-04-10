@@ -3,130 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Thông tin người dùng</title>
+    <title>Thể loại: Tiên Hiệp</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: #f7f3fc;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            height: 100vh;
-        }
-        .container {
-            width: 100%;
-            max-width: 550px;
             padding: 20px;
+            background-color: #f7f3fc;
             box-sizing: border-box;
         }
-        .user-info {
+        .container {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .book-card {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            background-color: #fff;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .user-icon {
-            width: 50px;
-            height: 50px;
-            background-color: #333;
-            border-radius: 50%;
+        .book-card img {
+            width: 60px;
+            height: 80px;
+            border-radius: 5px;
             margin-right: 15px;
         }
-        .user-details {
+        .book-info {
             flex-grow: 1;
         }
-        .user-details div {
-            margin-bottom: 5px;
+        .book-info h2 {
+            font-size: 18px;
+            margin: 0 0 5px 0;
+            color: #333;
         }
-        .dark-mode {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 40px;
-            height: 20px;
-        }
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 20px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 2px;
-            bottom: 2px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider {
-            background-color: #2196F3;
-        }
-        input:checked + .slider:before {
-            transform: translateX(20px);
-        }
-        .menu {
-            list-style-type: none;
-            padding: 0;
+        .book-info p {
             margin: 0;
-        }
-        .menu-item {
-            background-color: #fff;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            font-weight: bold;
-            font-size: 16px;
+            color: #666;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="user-info">
-            <div class="user-icon"></div>
-            <div class="user-details">
-                <div><strong>Thông tin người dùng</strong></div>
-                <div>ID:</div>
-                <div>Email:</div>
+        <h1>Thể loại: Tiên Hiệp</h1>
+        <div class="book-card">
+            <img src="https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474091tWX/bang-xep-hang-truyen-tien-hiep-trung-quoc-moi-nhat-hien-nay_034616833.jpg" alt="Vô Thượng Sát Thần">
+            <div class="book-info">
+                <h2>Vô Thượng Sát Thần</h2>
+                <p>Tác giả: Tà Tâm Vị Mẫn</p>
+                <p>Lượt xem: 3</p>
             </div>
         </div>
-        <div class="dark-mode">
-            <span>Chế độ nền tối</span>
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
+        <div class="book-card">
+            <img src="https://admin.manhuavn.top/Pictures/Truyen/Large/de-ba.jpg" alt="Đại Đạo Chi Thượng">
+            <div class="book-info">
+                <h2>Đại Đạo Chi Thượng</h2>
+                <p>Tác giả: Trạch Trư</p>
+                <p>Lượt xem: 700</p>
+            </div>
         </div>
-        <ul class="menu">
-            <li class="menu-item">Chatbot AI</li>
-            <li class="menu-item">Đăng nhập</li>
-            <li class="menu-item">Đăng ký</li>
-        </ul>
+        <div class="book-card">
+            <img src="https://lh3.googleusercontent.com/pw/AIL4fc-t6XfvToCrbdpI9umcAhZkr0TsDRccHo5fx_fK-DGgl10_VXlbHc_ythmGc2t30ja1r_r34_I8cZrjOq-CyyhyiJjhtR7XHUyfx79ffu6hirK5IZxE22IuINOgmJuawntOdp4kOexI0cCfgVwZiwYs=w215-h322-s-no?authuser=0" alt="Tuyệt Thế Cường Long">
+            <div class="book-info">
+                <h2>Tuyệt Thế Cường Long</h2>
+                <p>Tác giả: Hoa Tiến Tửu</p>
+                <p>Lượt xem: 0</p>
+            </div>
+        </div>
     </div>
 </body>
 </html>
