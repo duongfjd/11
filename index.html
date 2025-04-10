@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tủ Truyện</title>
+    <title>Thông tin người dùng</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,85 +21,111 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        .header {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .subheader {
-            font-size: 16px;
-            color: #666;
+        .user-info {
+            display: flex;
+            align-items: center;
             margin-bottom: 20px;
         }
-        .book-list {
+        .user-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #333;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        .user-details {
+            flex-grow: 1;
+        }
+        .user-details div {
+            margin-bottom: 5px;
+        }
+        .dark-mode {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+        .menu {
             list-style-type: none;
             padding: 0;
             margin: 0;
         }
-        .book-item {
-            display: flex;
-            align-items: center;
+        .menu-item {
             background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
-            padding: 10px;
-        }
-        .book-item img {
-            width: 50px;
-            height: 75px;
-            margin-right: 15px;
-            border-radius: 5px;
-        }
-        .book-info {
-            flex-grow: 1;
-        }
-        .book-title {
-            font-size: 16px;
+            text-align: center;
             font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .book-author {
-            font-size: 14px;
-            color: #666;
-        }
-        .delete-icon {
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">Tủ Truyện</div>
-        <div class="subheader">Truyện đã lưu</div>
-        <ul class="book-list">
-            <li class="book-item">
-                <img src="https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474091tWX/bang-xep-hang-truyen-tien-hiep-trung-quoc-moi-nhat-hien-nay_034616833.jpg" alt="Quỷ Bí Chi Chủ">
-                <div class="book-info">
-                    <div class="book-title">Quỷ Bí Chi Chủ</div>
-                    <div class="book-author">Ái Tiềm Thủy Đích Ô Tặc</div>
-                </div>
-                <img src="https://i.pinimg.com/564x/81/e3/17/81e31793e4266d231831a9c2548e7e33.jpg" alt="Delete" class="delete-icon">
-            </li>
-            <li class="book-item">
-                <img src="https://img.tangthuvien.net/images/story/23b9f814404ee0a32d03f7d09d762075ef88b0730b0537c8f70ee36c1b37af5e.jpg" alt="Vô Thượng Sát Thần">
-                <div class="book-info">
-                    <div class="book-title">Vô Thượng Sát Thần</div>
-                    <div class="book-author">Tà Tâm Vị Mẫn</div>
-                </div>
-                <img src="https://i.pinimg.com/564x/81/e3/17/81e31793e4266d231831a9c2548e7e33.jpg" alt="Delete" class="delete-icon">
-            </li>
-            <li class="book-item">
-                <img src="https://static.cdnno.com/poster/ai-bao-han-tu-tien-lao-ba-han-la-dai-dao-a/300.jpg?1693887636" alt="Đại Đạo Chi Thượng">
-                <div class="book-info">
-                    <div class="book-title">Đại Đạo Chi Thượng</div>
-                    <div class="book-author">Trạch Trư</div>
-                </div>
-                <img src="https://i.pinimg.com/564x/81/e3/17/81e31793e4266d231831a9c2548e7e33.jpg" alt="Delete" class="delete-icon">
-            </li>
+        <div class="user-info">
+            <div class="user-icon"></div>
+            <div class="user-details">
+                <div><strong>Thông tin người dùng</strong></div>
+                <div>ID:</div>
+                <div>Email:</div>
+            </div>
+        </div>
+        <div class="dark-mode">
+            <span>Chế độ nền tối</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <ul class="menu">
+            <li class="menu-item">Chatbot AI</li>
+            <li class="menu-item">Đăng nhập</li>
+            <li class="menu-item">Đăng ký</li>
         </ul>
     </div>
 </body>
