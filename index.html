@@ -1,220 +1,319 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nạp tiền vào tài khoản</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Form Thêm Thông Tin Tài Liệu</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 500px;
-            position: relative;
-            font-size: 14px;
-        }
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #000;
-        }
-        .title {
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .payment-methods {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .method {
-            text-align: center;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            width: 18%;
             background-color: #f9f9f9;
-        }
-        .method.highlight {
-            border: 2px solid #00c4b4;
-            background-color: #e6f7f6;
-        }
-        .method img {
-            width: 40px;
-            height: 40px;
-            margin-bottom: 5px;
-        }
-        .method p {
             margin: 0;
-            font-size: 12px;
-            color: #333;
+            padding: 20px;
+            color: #1f2937;
         }
-        .hot-label {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            background-color: #ff9800;
-            color: #fff;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 10px;
+
+        .mt-6 {
+            margin-top: 1.5rem;
         }
-        .section-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #00c4b4;
-            margin-bottom: 10px;
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
         }
-        .form-group {
-            margin-bottom: 15px;
+
+        .flex {
+            display: flex;
         }
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 5px;
+
+        .items-center {
+            align-items: center;
         }
-        .form-group select, .form-group input {
+
+        .gap-2 {
+            gap: 0.5rem;
+        }
+
+        .space-x-2 > * + * {
+            margin-left: 0.5rem;
+        }
+
+        .bg-white {
+            background-color: #ffffff;
+        }
+
+        .border {
+            border: 1px solid #e0e0e0;
+        }
+
+        .border-title-darker {
+            border-color: #9ca3af;
+        }
+
+        .rounded {
+            border-radius: 0.375rem;
+        }
+
+        .rounded-b-none {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .p-4 {
+            padding: 1rem;
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+            line-height: 1.5rem;
+        }
+
+        .text-primary {
+            color: #3b82f6; /* Màu xanh dương */
+        }
+
+        .font-medium {
+            font-weight: 500;
+        }
+
+        .font-normal {
+            font-weight: 400;
+        }
+
+        .input {
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
+            font-size: 1rem;
+            line-height: 1.5rem;
             box-sizing: border-box;
+            transition: border-color 0.3s ease;
         }
-        .phone-number {
-            font-size: 14px;
-            color: #333;
-            margin-bottom: 10px;
+
+        .input:focus {
+            border-color: #3b82f6;
+            outline: none;
+            box-shadow: 0 0 3px 1px rgba(59,130,246,0.5);
         }
-        .qr-guide {
-            font-size: 14px;
-            color: #00c4b4;
-            margin-bottom: 10px;
-        }
-        .bank-options a {
-            color: #00c4b4;
-            text-decoration: none;
-            margin-right: 10px;
-            font-size: 14px;
-        }
-        .wallet-options {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .wallet-options img {
-            width: 40px;
-            height: 40px;
-        }
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        .checkbox-group input {
-            margin-right: 10px;
-        }
-        .recaptcha {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .recaptcha span {
-            font-size: 12px;
-            color: #666;
-        }
-        .recaptcha img {
-            width: 40px;
-            height: 40px;
-        }
-        .submit-btn {
-            background-color: #00c4b4;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            width: 100%;
-            font-size: 16px;
+
+        select.input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image:
+              linear-gradient(45deg, transparent 50%, #3b82f6 50%),
+              linear-gradient(135deg, #3b82f6 50%, transparent 50%),
+              linear-gradient(to right, #d1d5db, #d1d5db);
+            background-position:
+              calc(100% - 20px) calc(1em + 2px),
+              calc(100% - 15px) calc(1em + 2px),
+              calc(100% - 25px) 0.5em;
+            background-size: 5px 5px, 5px 5px, 1px 1.5em;
+            background-repeat: no-repeat;
             cursor: pointer;
         }
-        .submit-btn:hover {
-            background-color: #00a89a;
+
+        label {
+            display: block;
+        }
+
+        .text-red-500 {
+            color: #ef4444; /* Màu đỏ */
+        }
+
+        .text-slate-500 {
+            color: #6b7280; /* Màu xám */
+        }
+
+        .button-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            transition: background-color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button-primary:hover {
+            background-color: #2563eb;
+        }
+
+        .button-spinner svg {
+            margin-right: 0.5rem;
+            animation: spin 1.5s linear infinite;
+            height: 1.25rem;
+            width: 1.25rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+
+        textarea.input {
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        /* For the file input styling */
+        input[type="file"] {
+            width: 100%;
+            padding: 0.5rem 0.25rem;
+            border-radius: 0.375rem;
+            border: 1px solid #d1d5db;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            color: #374151;
+        }
+        input[type="file"]:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 3px 1px rgba(59,130,246,0.5);
+        }
+
+        .line-clamp-2 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .break-all {
+            word-break: break-all;
+        }
+
+        /* Responsive heading font sizes */
+        @media (min-width: 768px) {
+            h3 {
+                font-size: 1.5rem;
+                line-height: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <span class="close-btn">×</span>
-        <div class="title">Nạp tiền vào tài khoản</div>
-        <div class="payment-methods">
-            <div class="method highlight" style="position: relative;">
-                <span class="hot-label">HOT</span>
-                <img src="chuyen-khoan-icon.png" alt="Chuyển khoản">
-                <p>Chuyển khoản</p>
+    <div>
+        <div class="px-4 md:px-10 py-3 md:py-6 border rounded bg-white rounded-t-none border-t-0">
+            <h3 class="md:text-auto text-lg lg:text-2xl font-semibold mb-4">
+                Thêm thông tin cho tài liệu
+            </h3>
+
+            <div class="my-4">
+                <label class="font-medium inline-block py-1 lg:text-base">
+                    Tên tài liệu <span class="text-red-500">*</span>
+                </label>
+                <div class="font-normal">
+                    <input class="input" type="text" placeholder="Nhập tên tài liệu" />
+                </div>
             </div>
-            <div class="method">
-                <img src="qr-code-icon.png" alt="QR Code">
-                <p>QR Code</p>
+
+            <div class="my-4">
+                <label class="font-medium inline-block py-1 lg:text-base">
+                    Danh mục <span class="text-red-500">*</span>
+                </label>
+                <div class="font-normal">
+                    <select class="input bg-white p-2 cursor-pointer border-title-darker" >
+                        <option value="0">Chọn danh mục</option>
+                        <option value="169">Luận Văn - Báo Cáo</option>
+                        <option value="154">Kỹ Năng Mềm</option>
+                        <option value="672">Mẫu Slide</option>
+                        <option value="35">Kinh Doanh - Tiếp Thị</option>
+                        <option value="44">Kinh Tế - Quản Lý</option>
+                        <option value="54">Tài Chính - Ngân Hàng</option>
+                        <option value="49">Biểu Mẫu - Văn Bản</option>
+                        <option value="99">Giáo Dục - Đào Tạo</option>
+                        <option value="284">Giáo án - Bài giảng</option>
+                        <option value="62">Công Nghệ Thông Tin</option>
+                        <option value="85">Kỹ Thuật - Công Nghệ</option>
+                        <option value="73">Ngoại Ngữ</option>
+                        <option value="93">Khoa Học Tự Nhiên</option>
+                        <option value="121">Y Tế - Sức Khỏe</option>
+                        <option value="104">Văn Hóa - Nghệ Thuật</option>
+                        <option value="165">Nông - Lâm - Ngư</option>
+                        <option value="186">Thể loại khác</option>
+                    </select>
+                </div>
             </div>
-            <div class="method">
-                <img src="momo-icon.png" alt="Ví Momo">
-                <p>Ví Momo</p>
+
+            <div class="my-4">
+                <label class="font-medium inline-block py-1 lg:text-base">
+                    Mô tả
+                </label>
+                <div class="font-normal">
+                    <textarea rows="5" placeholder="Nhập mô tả để có thứ hạng cao tại kết quả tìm kiếm" class="input"></textarea>
+                </div>
             </div>
-            <div class="method">
-                <img src="atm-icon.png" alt="Thẻ ATM online">
-                <p>Thẻ ATM online</p>
+
+            <div class="my-4">
+                <label class="font-medium inline-block py-1 lg:text-base">
+                    Từ khóa
+                </label>
+                <div class="font-normal">
+                    <input class="input" type="text" placeholder="Để có kết quả cao tại thứ hạng tìm kiếm" />
+                </div>
             </div>
-            <div class="method">
-                <img src="the-dien-thoai-icon.png" alt="Thẻ điện thoại">
-                <p>Thẻ điện thoại</p>
+
+            <div class="my-4">
+                <label class="font-medium inline-block py-1 lg:text-base">
+                    Giá bán <span class="text-red-500">*</span>
+                </label>
+                <div class="font-normal flex w-full space-x-2">
+                    <select aria-label="doc-money" class="my-1 md:w-full cursor-pointer rounded border bg-white p-2 outline-none input">
+                        <option value="0">Miễn phí</option>
+                        <option value="5000">5.000 VNĐ</option>
+                        <option value="10000">10.000 VNĐ</option>
+                        <option value="15000">15.000 VNĐ</option>
+                        <option value="20000">20.000 VNĐ</option>
+                        <option value="30000">30.000 VNĐ</option>
+                        <option value="35000">35.000 VNĐ</option>
+                        <option value="50000">50.000 VNĐ</option>
+                        <option value="70000">70.000 VNĐ</option>
+                        <option value="100000">100.000 VNĐ</option>
+                        <option value="150000">150.000 VNĐ</option>
+                        <option value="200000">200.000 VNĐ</option>
+                        <option value="300000">300.000 VNĐ</option>
+                        <option value="500000">500.000 VNĐ</option>
+                        <option value="-1">Tự đặt</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="my-4">
+                <label for="file_input" class="block mb-2 font-medium text-gray-900">File đính kèm</label>
+                <input type="file" id="file_input" accept=".zip,.rar" />
+                <p class="text-slate-500 mb-2 text-xs">
+                    Chỉ chấp nhận định dạng file ZIP/RAR (tối đa 32MB)
+                </p>
+            </div>
+
+            <div class="my-4">
+                <label class="font-medium inline-block py-1 lg:text-base">
+                    Tên file đính kèm
+                </label>
+                <div class="font-normal">
+                    <input class="input" type="text" placeholder="Nhập tên file đính kèm" />
+                </div>
+            </div>
+
+            <div class="mb-4 lg:text-base flex justify-center">
+                <button class="button-primary button-spinner" type="button" disabled>
+                    <svg viewBox="1.6 1.6 35.2 35.2" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false"><path fill-opacity=".25" d="M19.2 1.6a17.6 17.6 0 1 0 17.6 17.6A17.6 17.6 0 0 0 19.2 1.6Zm0 30.4A12.8 12.8 0 1 1 32 19.2 12.8 12.8 0 0 1 19.2 32Z"></path><path d="M16.224 1.856a17.6 17.6 0 0 0-14.4 14.272A2.544 2.544 0 0 0 3.936 19.2a2.432 2.432 0 0 0 2.64-2.08A12.8 12.8 0 0 1 17.232 6.544a2.272 2.272 0 0 0 1.968-2.24 2.512 2.512 0 0 0-2.976-2.448Z">
+                        <animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 18.5 18.5;360 20 20"/>
+                    </path>
+                    </svg>
+                    Lưu thông tin
+                </button>
             </div>
         </div>
-        <div class="section-title">Chuyển tiền bằng tài khoản ngân hàng</div>
-        <div class="form-group">
-            <label for="amount">Lựa chọn số tiền cần nạp</label>
-            <select id="amount">
-                <option>0xxx xxx xxx</option>
-            </select>
-        </div>
-        <div class="phone-number">Số điện thoại: 0xxx xxx xxx</div>
-        <div class="form-group">
-            <label>Sử dụng CHUYỂN TIỀN NHANH 24/7 của các ngân hàng</label>
-            <div class="qr-guide">Hướng dẫn quét mã QR:</div>
-            <div class="bank-options">
-                <a href="#">AGRIBANK</a> | <a href="#">VIETINBANK</a> | <a href="#">VIETCOMBANK</a> | <a href="#">BIDV</a>
-            </div>
-            <div class="qr-guide">Hoặc sử dụng quét QR của các ví điện tử:</div>
-            <div class="wallet-options">
-                <img src="payoo-icon.png" alt="Payoo">
-                <img src="momo-icon.png" alt="Momo">
-            </div>
-        </div>
-        <div class="checkbox-group">
-            <input type="checkbox" id="source">
-            <label for="source">Tôi không phải là nguồn máy</label>
-        </div>
-        <div class="recaptcha">
-            <span>Bắt buộc - ĐIỀU KHOẢN</span>
-            <img src="recaptcha-icon.png" alt="reCAPTCHA">
-        </div>
-        <button class="submit-btn">Nạp tiền</button>
     </div>
 </body>
 </html>
+
