@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hiển thị kết quả</title>
+  <title>Nạp tiền vào tài khoản</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,231 +12,181 @@
       padding: 0;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 20px;
+    .modal {
+      width: 600px;
+      margin: 50px auto;
       background: white;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      position: relative;
     }
 
-    .header {
+    .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
     }
 
-    .header h3 {
+    .modal-header h2 {
       margin: 0;
       font-size: 18px;
-      color: #333;
     }
 
-    .header select {
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .result-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 0;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .result-item:last-child {
-      border-bottom: none;
-    }
-
-    .result-item img {
-      width: 60px;
-      height: 60px;
-      background: #eaeaea;
-      border-radius: 5px;
-    }
-
-    .result-details {
-      flex: 1;
-      margin-left: 15px;
-    }
-
-    .result-details h4 {
-      margin: 0 0 5px;
-      font-size: 16px;
-      color: #333;
-    }
-
-    .result-details p {
-      margin: 5px 0;
-      font-size: 14px;
-      color: #666;
-    }
-
-    .result-details .stats {
-      font-size: 13px;
-      color: #888;
-    }
-
-    .result-details .stats span {
-      margin-right: 10px;
-    }
-
-    .result-price {
-      font-size: 16px;
-      font-weight: bold;
-      color: #28a745;
-    }
-
-    .result-actions {
-      text-align: right;
-    }
-
-    .result-actions button {
-      padding: 8px 15px;
-      border: none;
-      border-radius: 5px;
+    .modal-header .close-btn {
       cursor: pointer;
-      font-size: 14px;
+      font-size: 20px;
+      color: #333;
     }
 
-    .result-actions .details {
-      background-color: #007bff;
+    .tabs {
+      display: flex;
+      margin: 20px 0;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #333;
+      border: 2px solid transparent;
+    }
+
+    .tab.active {
       color: white;
+      background-color: #ff5722;
+      border-color: #ff5722;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .tab img {
+      height: 20px;
       margin-bottom: 5px;
     }
 
-    .result-actions .buy {
-      background-color: #28a745;
-      color: white;
+    .content {
+      padding: 10px;
+    }
+
+    .content h3 {
+      color: #28a745;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .content .note {
+      font-size: 14px;
+      color: red;
+      margin-bottom: 15px;
+    }
+
+    .qr-code {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .qr-code img {
+      width: 150px;
+      height: 150px;
+    }
+
+    .bank-info {
+      margin-top: 20px;
+    }
+
+    .bank-info table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .bank-info td {
+      padding: 8px 0;
+      font-size: 14px;
+    }
+
+    .bank-info td:first-child {
+      color: #333;
+      font-weight: bold;
+      width: 35%;
+    }
+
+    .total {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    .total span {
+      color: #28a745;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h3>Hiển thị 6 kết quả</h3>
-      <select>
-        <option>Độ phù hợp</option>
-        <option>Giá tăng dần</option>
-        <option>Giá giảm dần</option>
-      </select>
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Nạp tiền vào tài khoản</h2>
+      <span class="close-btn">X</span>
     </div>
 
-    <!-- Kết quả 1 -->
-    <div class="result-item">
-      <img src="#" alt="Thumbnail">
-      <div class="result-details">
-        <h4>Tuyển chọn những bài luận văn phát triển sản phẩm du lịch mang tính thực tiễn cao</h4>
-        <p class="stats">
-          <span>1250 lượt xem</span>
-          <span>320 lượt tải</span>
-          <span>⭐ 4.5</span>
-          <span>Ngày đăng: 08-5-2024</span>
-        </p>
-        <p class="result-price">50.000 VNĐ</p>
-      </div>
-      <div class="result-actions">
-        <button class="details">Xem chi tiết</button>
-        <button class="buy">Mua ngay</button>
-      </div>
+    <div class="tabs">
+      <div class="tab active">Chuyển khoản</div>
+      <div class="tab"><img src="#" alt="QR Code"> QR Code</div>
+      <div class="tab"><img src="#" alt="Momo"> Ví Momo</div>
+      <div class="tab"><img src="#" alt="ATM"> Thẻ ATM online</div>
+      <div class="tab"><img src="#" alt="Thẻ điện thoại"> Thẻ điện thoại</div>
     </div>
 
-    <!-- Kết quả 2 -->
-    <div class="result-item">
-      <img src="#" alt="Thumbnail">
-      <div class="result-details">
-        <h4>Hướng dẫn làm đồ án hệ thống cung cấp điện cho xưởng cơ khí MỚI NHẤT 2020</h4>
-        <p class="stats">
-          <span>980 lượt xem</span>
-          <span>245 lượt tải</span>
-          <span>⭐ 4.2</span>
-          <span>Ngày đăng: 07-8-2024</span>
-        </p>
-        <p class="result-price">45.000 VNĐ</p>
-      </div>
-      <div class="result-actions">
-        <button class="details">Xem chi tiết</button>
-        <button class="buy">Mua ngay</button>
-      </div>
-    </div>
+    <div class="content">
+      <h3>Chuyển tiền bằng tài khoản ngân hàng</h3>
+      <p class="note">
+        • Mỗi tài khoản nhận tương ứng với một giao dịch. Tuyệt đối không chuyển tiền vào STK của giao dịch cũ.<br>
+        • Bạn vui lòng đăng nhập Internet Banking của ngân hàng và chuyển khoản theo thông tin sau:
+      </p>
 
-    <!-- Kết quả 3 -->
-    <div class="result-item">
-      <img src="#" alt="Thumbnail">
-      <div class="result-details">
-        <h4>Top 10 tài liệu trắc nghiệm được lý có đáp án - Top Báo Cáo Thực Tập Tốt Nhất</h4>
-        <p class="stats">
-          <span>1560 lượt xem</span>
-          <span>410 lượt tải</span>
-          <span>⭐ 4.8</span>
-          <span>Ngày đăng: 15-10-2024</span>
-        </p>
-        <p class="result-price">60.000 VNĐ</p>
+      <div class="qr-code">
+        <img src="#" alt="QR Code">
       </div>
-      <div class="result-actions">
-        <button class="details">Xem chi tiết</button>
-        <button class="buy">Mua ngay</button>
-      </div>
-    </div>
 
-    <!-- Kết quả 4 -->
-    <div class="result-item">
-      <img src="#" alt="Thumbnail">
-      <div class="result-details">
-        <h4>Tổng hợp 10 tài liệu về thực tập động cơ hay nhất - Top Báo Cáo Thực Tập Tốt Nhất</h4>
-        <p class="stats">
-          <span>890 lượt xem</span>
-          <span>210 lượt tải</span>
-          <span>⭐ 4.0</span>
-          <span>Ngày đăng: 10-3-2024</span>
-        </p>
-        <p class="result-price">35.000 VNĐ</p>
-      </div>
-      <div class="result-actions">
-        <button class="details">Xem chi tiết</button>
-        <button class="buy">Mua ngay</button>
-      </div>
-    </div>
-
-    <!-- Kết quả 5 -->
-    <div class="result-item">
-      <img src="#" alt="Thumbnail">
-      <div class="result-details">
-        <h4>10 Mẫu lý do chọn đề tài nghiên cứu - Hướng dẫn cách viết lý do chọn đề tài</h4>
-        <p class="stats">
-          <span>1200 lượt xem</span>
-          <span>350 lượt tải</span>
-          <span>⭐ 4.6</span>
-          <span>Ngày đăng: 08-8-2024</span>
-        </p>
-        <p class="result-price">55.000 VNĐ</p>
-      </div>
-      <div class="result-actions">
-        <button class="details">Xem chi tiết</button>
-        <button class="buy">Mua ngay</button>
-      </div>
-    </div>
-
-    <!-- Kết quả 6 -->
-    <div class="result-item">
-      <img src="#" alt="Thumbnail">
-      <div class="result-details">
-        <h4>Đề cương ôn tập môn Kinh tế vĩ mô - Đại học Kinh tế Quốc dân</h4>
-        <p class="stats">
-          <span>780 lượt xem</span>
-          <span>190 lượt tải</span>
-          <span>⭐ 4.3</span>
-          <span>Ngày đăng: 12-4-2024</span>
-        </p>
-        <p class="result-price">40.000 VNĐ</p>
-      </div>
-      <div class="result-actions">
-        <button class="details">Xem chi tiết</button>
-        <button class="buy">Mua ngay</button>
+      <div class="bank-info">
+        <table>
+          <tr>
+            <td>Ngân hàng:</td>
+            <td>(MSB) Ngân hàng TMCP Hàng Hải Việt Nam</td>
+          </tr>
+          <tr>
+            <td>STK nhận:</td>
+            <td>96868624526270</td>
+          </tr>
+          <tr>
+            <td>Tên tài khoản:</td>
+            <td>BAOKIM THANH TOAN TAI LIEU</td>
+          </tr>
+          <tr>
+            <td>Chi nhánh:</td>
+            <td>Hà Nội</td>
+          </tr>
+          <tr>
+            <td>Số tiền:</td>
+            <td>100.000 đ</td>
+          </tr>
+          <tr>
+            <td>VAT (10%):</td>
+            <td>10.000 đ</td>
+          </tr>
+          <tr>
+            <td>Tổng:</td>
+            <td><span>110.000 đ</span></td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
