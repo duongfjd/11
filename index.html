@@ -2,79 +2,219 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Chương 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nạp tiền vào tài khoản</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 20px;
-            background-color: #f7f7f7;
-            line-height: 1.8;
-            color: #333;
         }
         .container {
-            max-width: 550px;
-            margin: 0 auto;
             background-color: #fff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 500px;
             position: relative;
+            font-size: 14px;
         }
-        .chapter-title {
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #444;
-        }
-        .chapter-content {
-            text-align: justify;
-        }
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .footer a {
-            text-decoration: none;
-            color: #3498db;
-            font-weight: bold;
-        }
-        .icons {
+        .close-btn {
             position: absolute;
             top: 10px;
             right: 10px;
-        }
-        .icons img {
-            width: 24px;
-            height: 24px;
-            margin-left: 10px;
+            font-size: 24px;
             cursor: pointer;
+            color: #000;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .payment-methods {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .method {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 18%;
+            background-color: #f9f9f9;
+        }
+        .method.highlight {
+            border: 2px solid #00c4b4;
+            background-color: #e6f7f6;
+        }
+        .method img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 5px;
+        }
+        .method p {
+            margin: 0;
+            font-size: 12px;
+            color: #333;
+        }
+        .hot-label {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background-color: #ff9800;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #00c4b4;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .form-group select, .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .phone-number {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .qr-guide {
+            font-size: 14px;
+            color: #00c4b4;
+            margin-bottom: 10px;
+        }
+        .bank-options a {
+            color: #00c4b4;
+            text-decoration: none;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        .wallet-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .wallet-options img {
+            width: 40px;
+            height: 40px;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .checkbox-group input {
+            margin-right: 10px;
+        }
+        .recaptcha {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .recaptcha span {
+            font-size: 12px;
+            color: #666;
+        }
+        .recaptcha img {
+            width: 40px;
+            height: 40px;
+        }
+        .submit-btn {
+            background-color: #00c4b4;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #00a89a;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="icons">
-            <img src="https://e7.pngegg.com/pngimages/613/651/png-clipart-headphones-computer-icons-symbol-headphone-logo-electronics-text-thumbnail.png" alt="Tai nghe" title="Nghe audio">
-            <img src="https://static-00.iconduck.com/assets.00/settings-icon-2048x2046-cw28eevx.png" alt="Cài đặt" title="Cài đặt">
+        <span class="close-btn">×</span>
+        <div class="title">Nạp tiền vào tài khoản</div>
+        <div class="payment-methods">
+            <div class="method highlight" style="position: relative;">
+                <span class="hot-label">HOT</span>
+                <img src="chuyen-khoan-icon.png" alt="Chuyển khoản">
+                <p>Chuyển khoản</p>
+            </div>
+            <div class="method">
+                <img src="qr-code-icon.png" alt="QR Code">
+                <p>QR Code</p>
+            </div>
+            <div class="method">
+                <img src="momo-icon.png" alt="Ví Momo">
+                <p>Ví Momo</p>
+            </div>
+            <div class="method">
+                <img src="atm-icon.png" alt="Thẻ ATM online">
+                <p>Thẻ ATM online</p>
+            </div>
+            <div class="method">
+                <img src="the-dien-thoai-icon.png" alt="Thẻ điện thoại">
+                <p>Thẻ điện thoại</p>
+            </div>
         </div>
-        <div class="chapter-title">Chương 1</div>
-        <div class="chapter-content">
-            <p>Thành phố W.</p>
-            <p>Tiểu khu biệt thự tại Vườn hoa uyển Thiên Đô.</p>
-            <p>Thẩm Dịch đứng trong góc không người chú ý cách cửa tiểu khu không xa.</p>
-            <p>Trên miệng hắn ngậm một điếu thuốc lá Trung Hoa, con mắt híp nửa nhìn vào tiểu khu, giống như suy nghĩ cái gì mãi không nhúc nhích.</p>
-            <p>Một điều hút xong, Thẩm Dịch ném đầu thuốc lá xuống đất, hung hăng đạp vài cái.</p>
-            <p>Sờ lên túi, móc ra gói Trung Hoa thừa một nửa, còn có vài tờ trăm tệ giá trị lớn, hắn tiện tay giữ chặt một người đi đường vừa đi ngang qua, nhét thuốc lá và tiền vào trong tay người đó: "Cho anh này, bạn thân."</p>
-            <p>Người đi đường kia trợn mắt há hốc mồm mà nhìn Thẩm Dịch, Thẩm Dịch đeo túi xách bước nhanh về hướng cư xá.</p>
-            <p>Đi vào cửa tiểu khu, vài tên bảo an cư xá ngăn Thẩm Dịch lại.</p>
-            <p>“Chuyển phát đây." Thẩm Dịch chĩa chĩa đồng...</p>
+        <div class="section-title">Chuyển tiền bằng tài khoản ngân hàng</div>
+        <div class="form-group">
+            <label for="amount">Lựa chọn số tiền cần nạp</label>
+            <select id="amount">
+                <option>0xxx xxx xxx</option>
+            </select>
         </div>
-        <div class="footer">
-            <a href="#">Chương trước</a> | <a href="#">Chương tiếp</a>
+        <div class="phone-number">Số điện thoại: 0xxx xxx xxx</div>
+        <div class="form-group">
+            <label>Sử dụng CHUYỂN TIỀN NHANH 24/7 của các ngân hàng</label>
+            <div class="qr-guide">Hướng dẫn quét mã QR:</div>
+            <div class="bank-options">
+                <a href="#">AGRIBANK</a> | <a href="#">VIETINBANK</a> | <a href="#">VIETCOMBANK</a> | <a href="#">BIDV</a>
+            </div>
+            <div class="qr-guide">Hoặc sử dụng quét QR của các ví điện tử:</div>
+            <div class="wallet-options">
+                <img src="payoo-icon.png" alt="Payoo">
+                <img src="momo-icon.png" alt="Momo">
+            </div>
         </div>
+        <div class="checkbox-group">
+            <input type="checkbox" id="source">
+            <label for="source">Tôi không phải là nguồn máy</label>
+        </div>
+        <div class="recaptcha">
+            <span>Bắt buộc - ĐIỀU KHOẢN</span>
+            <img src="recaptcha-icon.png" alt="reCAPTCHA">
+        </div>
+        <button class="submit-btn">Nạp tiền</button>
     </div>
 </body>
 </html>
