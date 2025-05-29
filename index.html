@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Quản lý tài chính - 123doc</title>
+<title>Quản lý tài liệu - 123doc</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
@@ -14,7 +14,7 @@
   body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    background: white;
+    background: #fff;
     color: #333;
   }
 
@@ -139,175 +139,193 @@
     flex-grow: 1;
   }
 
-  /* Section: Quản lý tài chính */
-  .section-title {
+  /* Header info on right */
+  .top-info {
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    font-size: 14px;
     font-weight: 600;
-    font-size: 18px;
     margin-bottom: 15px;
   }
-
-  /* Box containers */
-  .box {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 15px 20px;
-    margin-bottom: 25px;
+  .top-info div span {
+    display: block;
+    font-weight: 400;
+    color: #666;
   }
 
-  /* Thông tin số dư tài khoản */
-  .balance-info {
+  /* Section title and button */
+  .section-header {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 15px;
   }
-  .balance-info > div {
-    flex: 1 1 280px;
-  }
-  .balance-info h3 {
-    font-weight: 600;
-    font-size: 16px;
-    margin-bottom: 12px;
-  }
-  .balance-info .balance {
-    font-size: 22px;
-    font-weight: 700;
-    color: #ff6600;
-    margin-bottom: 10px;
-  }
-  .balance-info .btn {
-    display: inline-block;
-    padding: 6px 12px;
-    font-size: 14px;
+  .section-header button {
+    background: #ff9900;
+    border: none;
     border-radius: 4px;
-    border: 1px solid #00bcd4;
-    background: #e0f7fa;
-    color: #00bcd4;
+    color: white;
+    font-weight: 600;
+    padding: 8px 14px;
     cursor: pointer;
-    font-weight: 600;
-    margin-top: 6px;
-  }
-  .balance-info .btn.register {
-    border-color: #ff6600;
-    background: #fff4e5;
-    color: #ff6600;
-  }
-  .balance-info ul {
-    margin: 8px 0 0 15px;
-    padding: 0;
-    list-style-type: disc;
     font-size: 14px;
   }
-  .balance-info ul li {
-    margin-bottom: 6px;
-  }
-  .balance-info ul li strong,
-  .balance-info ul li b {
-    color: #ff6600;
-  }
 
-  /* Cấu hình rút tiền */
-  .withdraw-config {
-    font-size: 14px;
-  }
-  .withdraw-config strong {
-    display: block;
-    margin-bottom: 10px;
-  }
-  .withdraw-config .email {
-    color: #555;
-    font-weight: 600;
-    margin-bottom: 12px;
-  }
-  .withdraw-config .warning {
-    background: #fff4e5;
-    color: #ff6600;
-    padding: 10px 14px;
-    font-weight: 700;
-    border-radius: 4px;
-    text-align: center;
-  }
-
-  /* Lịch sử biến động số dư */
-  .history-tabs {
+  /* Tabs */
+  .tabs {
     display: flex;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 10px;
+    gap: 15px;
     font-size: 14px;
+    margin-bottom: 15px;
   }
-  .history-tabs button {
+  .tabs button {
     background: none;
     border: none;
-    padding: 10px 18px;
+    padding: 8px 12px;
     cursor: pointer;
-    border-bottom: 3px solid transparent;
     font-weight: 600;
-    color: #555;
+    color: #666;
+    border-bottom: 3px solid transparent;
     transition: all 0.3s ease;
   }
-  .history-tabs button.active {
-    border-bottom-color: #00bcd4;
+  .tabs button.active {
     color: #00bcd4;
+    border-bottom-color: #00bcd4;
   }
 
-  /* Table styles */
-  table {
-    width: 100%;
-    border-collapse: collapse;
+  /* Filter search */
+  .filter-search {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .filter-search input[type="search"] {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 6px 10px;
     font-size: 14px;
   }
-  thead tr {
-    background: #f3f6f8;
-  }
-  thead th {
-    padding: 10px 8px;
-    border: 1px solid #ddd;
-    font-weight: 600;
-    color: #555;
-    text-align: left;
-  }
-  tbody td {
-    padding: 10px 8px;
-    border: 1px solid #ddd;
-    vertical-align: top;
-    color: #444;
-  }
-  tbody tr:hover {
-    background: #f9f9f9;
+  .filter-search button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #999;
   }
 
-  /* Nội dung trong bảng có link màu xanh */
-  .content-link {
-    color: #00bcd4;
-    text-decoration: none;
+  /* Document list */
+  .doc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
-  .content-link:hover {
+  .doc-item {
+    display: flex;
+    gap: 15px;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+    align-items: flex-start;
+  }
+  .doc-item:last-child {
+    border-bottom: none;
+  }
+
+  /* Thumbnail */
+  .doc-thumb {
+    min-width: 70px;
+    min-height: 70px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .doc-thumb img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+  }
+
+  /* Document info */
+  .doc-info {
+    flex-grow: 1;
+  }
+  .doc-title {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0 0 6px 0;
+    cursor: pointer;
+    color: #333;
+  }
+  .doc-title:hover {
     text-decoration: underline;
   }
-
-  /* Số tiền màu cam hoặc xanh */
-  .amount-positive {
-    color: #27ae60;
-    font-weight: 700;
+  .doc-meta {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
   }
-  .amount-negative {
-    color: #ff6600;
-    font-weight: 700;
+  .doc-meta span {
+    margin-right: 12px;
   }
-
-  /* Mã giao dịch nhỏ hơn, màu xám */
-  .transaction-id {
-    font-size: 12px;
-    color: #999;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  /* Trạng thái */
-  .status-success {
-    color: #27ae60;
+  .doc-meta .free {
+    color: #ff9900;
     font-weight: 600;
+  }
+  .doc-meta .icon-check {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: url('https://cdn-icons-png.flaticon.com/512/190/190411.png') no-repeat center/contain;
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+  .doc-actions {
+    font-size: 13px;
+    color: #999;
+  }
+  .doc-actions button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin-right: 8px;
+    color: #999;
+    font-size: 13px;
+  }
+  .doc-actions button:hover {
+    color: #00bcd4;
+  }
+
+  /* Upload date and right button */
+  .doc-extra {
+    flex-shrink: 0;
+    text-align: right;
+    font-size: 13px;
+    color: #999;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .doc-extra .date {
+    margin-bottom: 10px;
+  }
+  .doc-extra button {
+    background: #00b36a;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  /* Scrollbar for long list */
+  .doc-list-container {
+    max-height: 480px;
+    overflow-y: auto;
   }
 
   /* Responsive */
@@ -318,6 +336,18 @@
     nav.sidebar {
       width: 100%;
       margin-bottom: 15px;
+    }
+    .doc-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .doc-extra {
+      width: 100%;
+      text-align: left;
+      margin-top: 10px;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 10px;
     }
   }
 </style>
@@ -331,125 +361,146 @@
   <button class="tai-len">TẢI LÊN</button>
   <div class="user-info" aria-label="Thông tin người dùng">
     <div class="avatar" aria-hidden="true"></div>
-    <div class="name">Việt Cường Vu...</div>
+    <div class="name">Việt Cường Vư...</div>
     <div class="bell" title="Thông báo"></div>
   </div>
 </header>
 
 <div class="container" role="main">
   <div class="profile-name" aria-label="Tên người dùng">Việt Cường Vương</div>
+  <div class="top-info" aria-label="Thông tin lượt xem, tài liệu, lượt tải">
+    <div>
+      <strong>280</strong>
+      <span>LƯỢT XEM</span>
+    </div>
+    <div>
+      <strong>7</strong>
+      <span>TÀI LIỆU</span>
+    </div>
+    <div>
+      <strong>0</strong>
+      <span>LƯỢT TẢI</span>
+    </div>
+  </div>
+
   <div class="layout">
     <nav class="sidebar" aria-label="Menu điều hướng">
       <button>Tổng quan</button>
-      <button>Quản lý tài liệu</button>
-      <button class="active" aria-current="page">Quản lý tài chính</button>
+      <button class="active" aria-current="page">Quản lý tài liệu</button>
+      <button>Quản lý tài chính</button>
       <button>Thông tin cá nhân</button>
       <button>Thông báo</button>
     </nav>
 
     <section class="main-content" aria-labelledby="section-title">
-      <h2 id="section-title" class="section-title">Quản lý tài chính</h2>
+      <div class="section-header">
+        <button type="button">Cập nhật giá hàng loạt</button>
+      </div>
 
-      <div class="box balance-info" aria-label="Thông tin số dư tài khoản">
-        <div>
-          <h3>Thông tin số dư tài khoản</h3>
-          <div><strong>SỐ DƯ TÀI KHOẢN DOANH THU</strong></div>
-          <div class="balance">0 đ</div>
-          <div><strong>SỐ DƯ TÀI KHOẢN MUA TÀI LIỆU</strong></div>
-          <div class="balance">27.000 đ</div>
-          <button class="btn" type="button">Nạp tiền</button>
+      <div class="tabs" role="tablist" aria-label="Các tab trạng thái tài liệu">
+        <button class="active" role="tab" aria-selected="true">Được duyệt (7)</button>
+        <button role="tab" aria-selected="false">Thiếu thông tin (7)</button>
+        <button role="tab" aria-selected="false">Chờ duyệt (7)</button>
+        <button role="tab" aria-selected="false">Bị trùng (4)</button>
+        <button role="tab" aria-selected="false" disabled>Lọc nâng cao</button>
 
-          <ul>
-            <li>Bạn đang sử dụng gói: <b>Mặc định</b></li>
-            <li>Giới hạn tải tài liệu 0đ</li>
-          </ul>
-          <button class="btn register" type="button">Đăng ký</button>
-        </div>
-
-        <div class="withdraw-config" aria-label="Cấu hình rút tiền">
-          <h3>Cấu hình rút tiền</h3>
-          <div class="email">EMAIL: vietcuongtanhoa20062004@gmail.com</div>
-          <div class="warning">Doanh thu của bạn chưa đủ 500.000 đ</div>
+        <div class="filter-search">
+          <input type="search" placeholder="Tìm kiếm..." aria-label="Tìm kiếm tài liệu" />
+          <button aria-label="Tìm kiếm">&#128269;</button>
         </div>
       </div>
 
-      <div class="box" aria-label="Lịch sử biến động số dư">
-        <div class="history-tabs" role="tablist">
-          <button class="active" role="tab" aria-selected="true" aria-controls="tab-mua" id="tab-mua-btn">Tài khoản mua tài liệu</button>
-          <button role="tab" aria-selected="false" aria-controls="tab-doanhthu" id="tab-doanhthu-btn">Tài khoản doanh thu</button>
-        </div>
+      <div class="doc-list-container">
+        <ul class="doc-list" role="list">
+          <li class="doc-item">
+            <div class="doc-thumb">
+              <img src="https://via.placeholder.com/70x70?text=Thumb" alt="Ảnh đại diện tài liệu CNXHKH" />
+            </div>
+            <div class="doc-info">
+              <h3 class="doc-title" tabindex="0" title="CNXHKH - Công nghiệp hóa, hiện đại hóa ở Việt Nam">CNXHKH - Công nghiệp hóa, hiện đại hóa ở Việt Nam</h3>
+              <div class="doc-meta">
+                Giáo án - Bài giảng &raquo; Cao đẳng - Đại học<br />
+                <span>61</span>
+                <span>0</span>
+                <span class="free">Miễn phí <span class="icon-check" aria-hidden="true"></span></span>
+              </div>
+              <div class="doc-actions">
+                <button type="button" aria-label="Xóa tài liệu">Xóa</button>
+                <button type="button" aria-label="Sửa tài liệu">Sửa</button>
+              </div>
+            </div>
+            <div class="doc-extra">
+              <div class="date">Ngày tải lên: 01/07/2024, 15:09</div>
+              <button type="button" aria-label="Đề xuất tài liệu liên quan">Đề xuất tài liệu liên quan</button>
+            </div>
+          </li>
 
-        <table aria-labelledby="history-table-title" role="grid" id="tab-mua">
-          <thead>
-            <tr>
-              <th>MÃ GIAO DỊCH</th>
-              <th>LOẠI GIAO DỊCH</th>
-              <th>NỘI DUNG</th>
-              <th>TRẠNG THÁI</th>
-              <th>SỐ TIỀN</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <span class="transaction-id">123docBuy-4055475<br>27/06/2024, 08:30</span>
-              </td>
-              <td>Mua tài liệu</td>
-              <td>
-                Mua tài liệu: <a href="#" class="content-link">Mô hình hóa nghiệp vụ với BPMN</a><br />
-                - Số dư tích lũy: 27.000đ
-              </td>
-              <td><span class="status-success">Thành công</span></td>
-              <td class="amount-negative">5.000 đ ↓</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="transaction-id">123docBuy-3896119<br>04/12/2023, 02:03</span>
-              </td>
-              <td>Mua tài liệu</td>
-              <td>
-                Mua tài liệu: <a href="#" class="content-link">Đồ án Xây dựng chương trình quản lý sinh viên bằng ngôn ngữ lập trình C++</a><br />
-                - Số dư tích lũy: 32.000đ
-              </td>
-              <td><span class="status-success">Thành công</span></td>
-              <td class="amount-negative">15.000 đ ↓</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="transaction-id">123docBuy-3892054<br>29/11/2023, 23:30</span>
-              </td>
-              <td>Thanh toán gói tải 0đ</td>
-              <td>
-                Thanh toán gói tải tài liệu 0đ: gói 1 tháng<br />
-                - Số dư tích lũy: 47.000đ
-              </td>
-              <td><span class="status-success">Thành công</span></td>
-              <td class="amount-negative">30.000 đ ↓</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="transaction-id">123docBuy-3866087<br>06/11/2023, 19:52</span>
-              </td>
-              <td>Mua tài liệu</td>
-              <td>
-                Mua tài liệu: <a href="#" class="content-link">Công nghệ phần mềm</a>
-              </td>
-              <td><span class="status-success">Thành công</span></td>
-              <td class="amount-negative">25.000 đ ↓</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="transaction-id">123docAdd-5522482<br>06/11/2023, 19:52</span>
-              </td>
-              <td>Nạp tiền ATM/QR</td>
-              <td>
-                ATM ID: 2180302 - Order ID: addatm_2180302 - Mệnh giá: 110,000 VND - BK transaction: 2206564 - BK transaction status: 1
-              </td>
-              <td><span class="status-success">Thành công</span></td>
-              <td class="amount-positive">102.000 đ ↑</td>
-            </tr>
-          </tbody>
-        </table>
+          <li class="doc-item">
+            <div class="doc-thumb">
+              <img src="https://via.placeholder.com/70x70?text=Thumb" alt="Ảnh đại diện tài liệu 7-Pttkhttt-Design - 1.Pdf" />
+            </div>
+            <div class="doc-info">
+              <h3 class="doc-title" tabindex="0" title="7-Pttkhttt-Design - 1.Pdf">7-Pttkhttt-Design - 1.Pdf</h3>
+              <div class="doc-meta">
+                Luận Văn - Báo Cáo &raquo; Kinh tế - Quản lý<br />
+                <span>24</span>
+                <span>1</span>
+                <span class="free">Miễn phí <span class="icon-check" aria-hidden="true"></span></span>
+              </div>
+              <div class="doc-actions">
+                <button type="button" aria-label="Xóa tài liệu">Xóa</button>
+                <button type="button" aria-label="Sửa tài liệu">Sửa</button>
+              </div>
+            </div>
+            <div class="doc-extra">
+              <div class="date">Ngày tải lên: 29/06/2024, 00:00</div>
+              <button type="button" aria-label="Đề xuất tài liệu liên quan">Đề xuất tài liệu liên quan</button>
+            </div>
+          </li>
+
+          <li class="doc-item">
+            <div class="doc-thumb">
+              <img src="https://via.placeholder.com/70x70?text=Thumb" alt="Ảnh đại diện tài liệu 9-Pttkhttt-Design - 4.Pdf" />
+            </div>
+            <div class="doc-info">
+              <h3 class="doc-title" tabindex="0" title="9-Pttkhttt-Design - 4.Pdf">9-Pttkhttt-Design - 4.Pdf</h3>
+              <div class="doc-meta">
+                Luận Văn - Báo Cáo &raquo; Kinh tế - Quản lý<br />
+                <span>30</span>
+                <span>2</span>
+                <span class="free">Miễn phí <span class="icon-check" aria-hidden="true"></span></span>
+              </div>
+              <div class="doc-actions">
+                <button type="button" aria-label="Xóa tài liệu">Xóa</button>
+                <button type="button" aria-label="Sửa tài liệu">Sửa</button>
+              </div>
+            </div>
+            <div class="doc-extra">
+              <div class="date">Ngày tải lên: 29/06/2024, 00:00</div>
+              <button type="button" aria-label="Đề xuất tài liệu liên quan">Đề xuất tài liệu liên quan</button>
+            </div>
+          </li>
+
+          <li class="doc-item">
+            <div class="doc-thumb">
+              <img src="https://via.placeholder.com/70x70?text=Thumb" alt="Ảnh đại diện tài liệu Nội Dung Thi.docx" />
+            </div>
+            <div class="doc-info">
+              <h3 class="doc-title" tabindex="0" title="Nội Dung Thi.docx">Nội Dung Thi.docx</h3>
+              <div class="doc-meta">
+                Luận Văn - Báo Cáo &raquo; Kinh tế - Quản lý
+              </div>
+              <div class="doc-actions">
+                <button type="button" aria-label="Xóa tài liệu">Xóa</button>
+                <button type="button" aria-label="Sửa tài liệu">Sửa</button>
+              </div>
+            </div>
+            <div class="doc-extra">
+              <div class="date">Ngày tải lên: 29/06/2024, 00:00</div>
+              <button type="button" aria-label="Đề xuất tài liệu liên quan">Đề xuất tài liệu liên quan</button>
+            </div>
+          </li>
+        </ul>
       </div>
     </section>
   </div>
