@@ -1,178 +1,459 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hiệu ứng mỏ neo</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quản lý tài chính - 123doc</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-    .container {
-      max-width: 800px;
-      margin: 20px auto;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-    }
+  * {
+    box-sizing: border-box;
+  }
 
-    .question {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
-    }
+  body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: white;
+    color: #333;
+  }
 
-    .question span {
-      font-weight: bold;
-      color: #333;
-      margin-right: 10px;
-    }
+  /* Header */
+  header {
+    display: flex;
+    align-items: center;
+    background: #00bcd4;
+    padding: 5px 15px;
+    color: white;
+  }
+  header .logo {
+    font-weight: bold;
+    font-size: 20px;
+    color: #ff6600;
+    margin-right: 10px;
+  }
+  header input[type="search"] {
+    flex-grow: 1;
+    border-radius: 4px;
+    border: none;
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+  header button {
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  header button.nap-tien {
+    background: #ff9900;
+    color: white;
+  }
+  header button.tai-len {
+    background: #27ae60;
+    color: white;
+  }
+  header .user-info {
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+  }
+  header .user-info .avatar {
+    width: 40px;
+    height: 40px;
+    background: #bbb;
+    border-radius: 6px;
+  }
+  header .user-info .name {
+    white-space: nowrap;
+  }
+  header .user-info .bell {
+    width: 20px;
+    height: 20px;
+    background: url('https://cdn-icons-png.flaticon.com/512/1827/1827279.png') no-repeat center/contain;
+    cursor: pointer;
+  }
 
-    .question time {
-      font-size: 12px;
-      color: #888;
-    }
+  /* Main container */
+  .container {
+    max-width: 1100px;
+    margin: 20px auto 40px;
+    padding: 0 15px;
+  }
 
-    .answer {
-      margin-bottom: 20px;
-    }
+  /* Profile top */
+  .profile-name {
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 25px;
+  }
 
-    .answer p {
-      font-size: 14px;
-      line-height: 1.6;
-      color: #333;
-      margin: 10px 0;
-    }
+  /* Main layout: sidebar + main content */
+  .layout {
+    display: flex;
+    gap: 20px;
+  }
 
-    .related-docs {
-      margin-top: 20px;
-    }
+  /* Sidebar */
+  nav.sidebar {
+    width: 220px;
+    background: #f6f9fa;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  nav.sidebar button {
+    display: block;
+    width: 100%;
+    padding: 12px 18px;
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+  }
+  nav.sidebar button:hover {
+    background: #e9f5f7;
+  }
+  nav.sidebar button.active {
+    background: #00bcd4;
+    color: white;
+    border-left-color: #ff6600;
+    font-weight: 600;
+  }
+  nav.sidebar button:disabled {
+    color: #aaa;
+    cursor: default;
+  }
 
-    .related-docs h3 {
-      font-size: 16px;
-      color: #333;
-      margin-bottom: 10px;
-    }
+  /* Main content */
+  .main-content {
+    flex-grow: 1;
+  }
 
-    .doc-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #f8f8f8;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 10px;
-      margin-bottom: 10px;
-    }
+  /* Section: Quản lý tài chính */
+  .section-title {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
 
-    .doc-item .doc-info {
-      display: flex;
-      align-items: center;
-    }
+  /* Box containers */
+  .box {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+  }
 
-    .doc-item .doc-info img {
-      width: 40px;
-      height: 40px;
-      background: #ddd;
-      border-radius: 4px;
-      margin-right: 10px;
-    }
+  /* Thông tin số dư tài khoản */
+  .balance-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .balance-info > div {
+    flex: 1 1 280px;
+  }
+  .balance-info h3 {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  .balance-info .balance {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ff6600;
+    margin-bottom: 10px;
+  }
+  .balance-info .btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #00bcd4;
+    background: #e0f7fa;
+    color: #00bcd4;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 6px;
+  }
+  .balance-info .btn.register {
+    border-color: #ff6600;
+    background: #fff4e5;
+    color: #ff6600;
+  }
+  .balance-info ul {
+    margin: 8px 0 0 15px;
+    padding: 0;
+    list-style-type: disc;
+    font-size: 14px;
+  }
+  .balance-info ul li {
+    margin-bottom: 6px;
+  }
+  .balance-info ul li strong,
+  .balance-info ul li b {
+    color: #ff6600;
+  }
 
-    .doc-item .doc-info p {
-      margin: 0;
-      font-size: 14px;
-      color: #333;
-    }
+  /* Cấu hình rút tiền */
+  .withdraw-config {
+    font-size: 14px;
+  }
+  .withdraw-config strong {
+    display: block;
+    margin-bottom: 10px;
+  }
+  .withdraw-config .email {
+    color: #555;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .withdraw-config .warning {
+    background: #fff4e5;
+    color: #ff6600;
+    padding: 10px 14px;
+    font-weight: 700;
+    border-radius: 4px;
+    text-align: center;
+  }
 
-    .doc-item .doc-info p span {
-      display: block;
-      font-size: 12px;
-      color: #888;
-    }
+  /* Lịch sử biến động số dư */
+  .history-tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .history-tabs button {
+    background: none;
+    border: none;
+    padding: 10px 18px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    font-weight: 600;
+    color: #555;
+    transition: all 0.3s ease;
+  }
+  .history-tabs button.active {
+    border-bottom-color: #00bcd4;
+    color: #00bcd4;
+  }
 
-    .doc-item .doc-price {
-      font-size: 14px;
-      color: #28a745;
-      font-weight: bold;
-    }
+  /* Table styles */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead tr {
+    background: #f3f6f8;
+  }
+  thead th {
+    padding: 10px 8px;
+    border: 1px solid #ddd;
+    font-weight: 600;
+    color: #555;
+    text-align: left;
+  }
+  tbody td {
+    padding: 10px 8px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+    color: #444;
+  }
+  tbody tr:hover {
+    background: #f9f9f9;
+  }
 
-    .input-box {
-      display: flex;
-      align-items: center;
-      margin-top: 20px;
-    }
+  /* Nội dung trong bảng có link màu xanh */
+  .content-link {
+    color: #00bcd4;
+    text-decoration: none;
+  }
+  .content-link:hover {
+    text-decoration: underline;
+  }
 
-    .input-box input {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
-    }
+  /* Số tiền màu cam hoặc xanh */
+  .amount-positive {
+    color: #27ae60;
+    font-weight: 700;
+  }
+  .amount-negative {
+    color: #ff6600;
+    font-weight: 700;
+  }
 
-    .input-box button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin-left: 10px;
-      border-radius: 4px;
-      font-size: 14px;
-      cursor: pointer;
-    }
+  /* Mã giao dịch nhỏ hơn, màu xám */
+  .transaction-id {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 8px;
+    display: block;
+  }
 
-    .input-box button:hover {
-      background: #0056b3;
+  /* Trạng thái */
+  .status-success {
+    color: #27ae60;
+    font-weight: 600;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .layout {
+      flex-direction: column;
     }
-  </style>
+    nav.sidebar {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="question">
-      <span>UN</span>
-      <p>Hiệu ứng mỏ neo trong hành vi tiêu dùng là gì?</p>
-      <time>23:30</time>
-    </div>
 
-    <div class="answer">
-      <p>
-        Hiệu ứng mỏ neo (Anchoring Effect) là một thiên kiến nhận thức trong tâm lý học, đề cập đến xu hướng con người phụ thuộc quá mức vào thông tin đầu tiên được cung cấp ("mỏ neo") khi đưa ra quyết định.
-      </p>
-      <p>
-        Ví dụ: Khi một cửa hàng niêm yết giá gốc cao, sau đó giảm giá 50%, người tiêu dùng có xu hướng cảm thấy đó là một ưu đãi tốt, ngay cả khi giá sau giảm vẫn cao hơn giá thị trường.
-      </p>
-      <p>
-        Trong marketing, hiệu ứng mỏ neo được sử dụng rộng rãi để định hướng quyết định mua hàng của khách hàng. Dưới đây là một số tài liệu chuyên sâu về chủ đề này:
-      </p>
-    </div>
-
-    <div class="related-docs">
-      <h3>Tài liệu liên quan:</h3>
-      <div class="doc-item">
-        <div class="doc-info">
-          <img src="#" alt="Document Image">
-          <p>Hành vi người tiêu dùng: Các yếu tố tâm lý ảnh hưởng đến quyết định mua hàng <span>110.000 VNĐ</span></p>
-        </div>
-        <div class="doc-price">110.000 VNĐ</div>
-      </div>
-      <div class="doc-item">
-        <div class="doc-info">
-          <img src="#" alt="Document Image">
-          <p>Nghiên cứu về thiên kiến nhận thức trong marketing và kinh doanh <span>135.000 VNĐ</span></p>
-        </div>
-        <div class="doc-price">135.000 VNĐ</div>
-      </div>
-    </div>
-
-    <div class="input-box">
-      <input type="text" placeholder="Nhập câu hỏi của bạn ...">
-      <button>Gửi</button>
-    </div>
+<header>
+  <div class="logo">123doc</div>
+  <input type="search" placeholder="Tìm kiếm tài liệu..." aria-label="Tìm kiếm tài liệu" />
+  <button class="nap-tien">NẠP TIỀN</button>
+  <button class="tai-len">TẢI LÊN</button>
+  <div class="user-info" aria-label="Thông tin người dùng">
+    <div class="avatar" aria-hidden="true"></div>
+    <div class="name">Việt Cường Vu...</div>
+    <div class="bell" title="Thông báo"></div>
   </div>
+</header>
+
+<div class="container" role="main">
+  <div class="profile-name" aria-label="Tên người dùng">Việt Cường Vương</div>
+  <div class="layout">
+    <nav class="sidebar" aria-label="Menu điều hướng">
+      <button>Tổng quan</button>
+      <button>Quản lý tài liệu</button>
+      <button class="active" aria-current="page">Quản lý tài chính</button>
+      <button>Thông tin cá nhân</button>
+      <button>Thông báo</button>
+    </nav>
+
+    <section class="main-content" aria-labelledby="section-title">
+      <h2 id="section-title" class="section-title">Quản lý tài chính</h2>
+
+      <div class="box balance-info" aria-label="Thông tin số dư tài khoản">
+        <div>
+          <h3>Thông tin số dư tài khoản</h3>
+          <div><strong>SỐ DƯ TÀI KHOẢN DOANH THU</strong></div>
+          <div class="balance">0 đ</div>
+          <div><strong>SỐ DƯ TÀI KHOẢN MUA TÀI LIỆU</strong></div>
+          <div class="balance">27.000 đ</div>
+          <button class="btn" type="button">Nạp tiền</button>
+
+          <ul>
+            <li>Bạn đang sử dụng gói: <b>Mặc định</b></li>
+            <li>Giới hạn tải tài liệu 0đ</li>
+          </ul>
+          <button class="btn register" type="button">Đăng ký</button>
+        </div>
+
+        <div class="withdraw-config" aria-label="Cấu hình rút tiền">
+          <h3>Cấu hình rút tiền</h3>
+          <div class="email">EMAIL: vietcuongtanhoa20062004@gmail.com</div>
+          <div class="warning">Doanh thu của bạn chưa đủ 500.000 đ</div>
+        </div>
+      </div>
+
+      <div class="box" aria-label="Lịch sử biến động số dư">
+        <div class="history-tabs" role="tablist">
+          <button class="active" role="tab" aria-selected="true" aria-controls="tab-mua" id="tab-mua-btn">Tài khoản mua tài liệu</button>
+          <button role="tab" aria-selected="false" aria-controls="tab-doanhthu" id="tab-doanhthu-btn">Tài khoản doanh thu</button>
+        </div>
+
+        <table aria-labelledby="history-table-title" role="grid" id="tab-mua">
+          <thead>
+            <tr>
+              <th>MÃ GIAO DỊCH</th>
+              <th>LOẠI GIAO DỊCH</th>
+              <th>NỘI DUNG</th>
+              <th>TRẠNG THÁI</th>
+              <th>SỐ TIỀN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span class="transaction-id">123docBuy-4055475<br>27/06/2024, 08:30</span>
+              </td>
+              <td>Mua tài liệu</td>
+              <td>
+                Mua tài liệu: <a href="#" class="content-link">Mô hình hóa nghiệp vụ với BPMN</a><br />
+                - Số dư tích lũy: 27.000đ
+              </td>
+              <td><span class="status-success">Thành công</span></td>
+              <td class="amount-negative">5.000 đ ↓</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="transaction-id">123docBuy-3896119<br>04/12/2023, 02:03</span>
+              </td>
+              <td>Mua tài liệu</td>
+              <td>
+                Mua tài liệu: <a href="#" class="content-link">Đồ án Xây dựng chương trình quản lý sinh viên bằng ngôn ngữ lập trình C++</a><br />
+                - Số dư tích lũy: 32.000đ
+              </td>
+              <td><span class="status-success">Thành công</span></td>
+              <td class="amount-negative">15.000 đ ↓</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="transaction-id">123docBuy-3892054<br>29/11/2023, 23:30</span>
+              </td>
+              <td>Thanh toán gói tải 0đ</td>
+              <td>
+                Thanh toán gói tải tài liệu 0đ: gói 1 tháng<br />
+                - Số dư tích lũy: 47.000đ
+              </td>
+              <td><span class="status-success">Thành công</span></td>
+              <td class="amount-negative">30.000 đ ↓</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="transaction-id">123docBuy-3866087<br>06/11/2023, 19:52</span>
+              </td>
+              <td>Mua tài liệu</td>
+              <td>
+                Mua tài liệu: <a href="#" class="content-link">Công nghệ phần mềm</a>
+              </td>
+              <td><span class="status-success">Thành công</span></td>
+              <td class="amount-negative">25.000 đ ↓</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="transaction-id">123docAdd-5522482<br>06/11/2023, 19:52</span>
+              </td>
+              <td>Nạp tiền ATM/QR</td>
+              <td>
+                ATM ID: 2180302 - Order ID: addatm_2180302 - Mệnh giá: 110,000 VND - BK transaction: 2206564 - BK transaction status: 1
+              </td>
+              <td><span class="status-success">Thành công</span></td>
+              <td class="amount-positive">102.000 đ ↑</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+
 </body>
 </html>
