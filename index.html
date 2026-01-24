@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Share - Tìm kiếm</title>
+    <title>Food Share - Tin nhắn</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #f0f0f0;
+            background-color: #eee;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -22,10 +22,10 @@
         }
 
         /* Khung chứa 360x800 */
-        .phone-container {
+        .container {
             width: 360px;
             height: 800px;
-            background-color: #fdf8ff; /* Màu nền tím nhạt đặc trưng */
+            background-color: #fdf8ff;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -33,78 +33,102 @@
             border: 1px solid #ccc;
         }
 
-        /* Header xanh lá */
+        /* Header */
         .header {
             background-color: #4CAF50;
             padding: 15px 20px;
-            height: 60px;
+            height: 65px;
             display: flex;
             align-items: center;
         }
 
         .header h1 {
-            color: #000; /* Chữ Tìm kiếm màu đen theo ảnh */
+            color: #1a1a1a;
             font-size: 22px;
             font-weight: 500;
         }
 
-        /* Thanh tìm kiếm */
-        .search-section {
-            padding: 15px;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .search-input-wrapper {
+        /* Danh sách tin nhắn */
+        .chat-list {
             flex: 1;
+            padding-top: 10px;
         }
 
-        .search-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #999;
-            border-radius: 8px;
-            font-size: 15px;
-            outline: none;
-            background-color: white;
+        .chat-item {
+            display: flex;
+            padding: 15px 20px;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            position: relative;
         }
 
-        .search-input::placeholder {
-            color: #666;
-        }
-
-        .search-button {
-            background-color: #4CAF50;
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 8px;
-            color: white;
+        /* Avatar */
+        .avatar {
+            width: 55px;
+            height: 55px;
+            background-color: #c8e6c9;
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
+            font-size: 22px;
+            color: #2e7d32;
+            font-weight: bold;
+            margin-right: 15px;
         }
 
-        /* Trạng thái trống */
-        .empty-state {
+        .chat-info {
             flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-bottom: 100px; /* Căn chỉnh vị trí chữ cao hơn một chút */
         }
 
-        .empty-text {
+        .name-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .name {
+            font-weight: bold;
+            font-size: 16px;
+            color: #1a1a1a;
+        }
+
+        .time {
+            font-size: 12px;
+            color: #4CAF50; /* Màu xanh lá cho tin nhắn mới nhất */
+            font-weight: bold;
+        }
+
+        .time.gray {
             color: #888;
+            font-weight: normal;
+        }
+
+        .message-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #777;
             font-size: 14px;
         }
 
-        /* Bottom Navigation */
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+        }
+
+        .check-icon {
+            font-size: 12px;
+            margin-right: 4px;
+        }
+
+        /* Bottom Nav */
         .bottom-nav {
             height: 70px;
-            background: white;
+            background: #fdf8ff;
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -114,13 +138,11 @@
         .nav-item {
             text-align: center;
             color: #888;
-            font-size: 13px;
-            flex: 1;
+            text-decoration: none;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 4px;
-            text-decoration: none;
         }
 
         .nav-item.active {
@@ -128,50 +150,77 @@
         }
 
         .nav-item i {
-            font-size: 20px;
+            font-size: 22px;
         }
 
-        /* Tinh chỉnh riêng cho Icon Search trong Nav */
-        .nav-item.active i {
-            font-weight: 900;
+        .nav-item span {
+            font-size: 12px;
         }
-
     </style>
 </head>
 <body>
 
-<div class="phone-container">
+<div class="container">
     <div class="header">
-        <h1>Tìm kiếm</h1>
+        <h1>Tin nhắn</h1>
     </div>
 
-    <div class="search-section">
-        <div class="search-input-wrapper">
-            <input type="text" class="search-input" placeholder="Nhập tên nguyên liệu...">
+    <div class="chat-list">
+        <div class="chat-item">
+            <div class="avatar">N</div>
+            <div class="chat-info">
+                <div class="name-row">
+                    <span class="name">Nguyễn Văn Tày</span>
+                    <span class="time">13:58</span>
+                </div>
+                <div class="message-row">
+                    <span>[Ảnh]</span>
+                    <div class="status-dot"></div>
+                </div>
+            </div>
         </div>
-        <button class="search-button">
-            <i class="fas fa-search"></i>
-        </button>
-    </div>
 
-    <div class="empty-state">
-        <p class="empty-text">Chưa có dữ liệu tìm kiếm</p>
+        <div class="chat-item">
+            <div class="avatar">T</div>
+            <div class="chat-info">
+                <div class="name-row">
+                    <span class="name">Tày A Man</span>
+                    <span class="time gray">13:06</span>
+                </div>
+                <div class="message-row">
+                    <span><i class="fas fa-check-double check-icon"></i> [Ảnh]</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-item">
+            <div class="avatar">P</div>
+            <div class="chat-info">
+                <div class="name-row">
+                    <span class="name">Phùng Canh Mộ</span>
+                    <span class="time gray">11:30</span>
+                </div>
+                <div class="message-row">
+                    <span><i class="fas fa-check-double check-icon"></i> [Ảnh]</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="bottom-nav">
-        <a href="#" class="nav-item">
+        <div class="nav-item">
             <i class="fas fa-home"></i>
-        </a>
-        <a href="#" class="nav-item active">
+        </div>
+        <div class="nav-item">
             <i class="fas fa-search"></i>
-            <span>Tìm kiếm</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="far fa-comment-alt"></i>
-        </a>
-        <a href="#" class="nav-item">
+        </div>
+        <div class="nav-item active">
+            <i class="fas fa-comment-alt"></i>
+            <span>Tin nhắn</span>
+        </div>
+        <div class="nav-item">
             <i class="fas fa-user"></i>
-        </a>
+        </div>
     </div>
 </div>
 
