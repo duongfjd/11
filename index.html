@@ -1,143 +1,229 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Food Share - Login</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: "Segoe UI", sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Share UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    body {
-      margin: 0;
-      padding: 0;
-      background: #eee;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-    .app {
-      width: 360px;
-      height: 800px;
-      background: linear-gradient(180deg, #7ecbff 0%, #ffd1dc 100%);
-      border-radius: 16px;
-      padding: 40px 24px;
-      color: white;
-    }
+        /* Khung chứa mô phỏng màn hình điện thoại */
+        .phone-container {
+            width: 360px;
+            height: 800px;
+            background-color: #fdf8ff; /* Màu nền hơi tím nhạt như ảnh */
+            border: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .logo {
-      width: 96px;
-      height: 96px;
-      background: white;
-      border-radius: 24px;
-      margin: 40px auto 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+        /* Header */
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+        }
+        .header h1 {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .header p {
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            opacity: 0.9;
+        }
 
-    .logo span {
-      font-size: 48px;
-      color: #4f8cff;
-    }
+        /* Danh sách nội dung */
+        .content {
+            flex: 1;
+            padding: 12px;
+            overflow-y: auto;
+        }
 
-    h1 {
-      text-align: center;
-      margin: 8px 0;
-      font-size: 28px;
-      font-weight: 600;
-    }
+        /* Thẻ Card */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border: 1px solid #eee;
+        }
 
-    .subtitle {
-      text-align: center;
-      font-size: 14px;
-      opacity: 0.9;
-      margin-bottom: 32px;
-    }
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
 
-    .input {
-      width: 100%;
-      height: 48px;
-      border-radius: 12px;
-      border: none;
-      padding: 0 16px;
-      margin-bottom: 16px;
-      font-size: 14px;
-    }
+        .card-title {
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 4px;
+        }
 
-    .button {
-      width: 100%;
-      height: 52px;
-      border-radius: 14px;
-      border: none;
-      background: #4f8cff;
-      color: white;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 8px;
-    }
+        .card-detail {
+            font-size: 13px;
+            color: #777;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .social {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      margin: 24px 0;
-    }
+        .card-detail i {
+            width: 16px;
+            color: #4CAF50;
+        }
 
-    .social div {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
-      font-size: 20px;
-    }
+        /* Nút Chi tiết */
+        .btn-detail {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-    .google { color: #db4437; }
-    .facebook { color: #1877f2; }
+        /* Nút Floating Action Button (+) */
+        .fab {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 20px; /* Bo góc vuông hơn hình tròn chút */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
 
-    .register {
-      text-align: center;
-      font-size: 14px;
-      opacity: 0.9;
-    }
+        /* Bottom Navigation */
+        .bottom-nav {
+            height: 65px;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #eee;
+        }
 
-    .register span {
-      font-weight: 600;
-    }
-  </style>
+        .nav-item {
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .nav-item.active {
+            color: #4CAF50;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 4px;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="app">
-    <div class="logo">
-      <span>🍴</span>
+<div class="phone-container">
+    <div class="header">
+        <h1>Food Share</h1>
+        <p>Nơi kết nối cộng đồng, giao lưu và chia sẻ nguy...</p>
     </div>
 
-    <h1>Food Share</h1>
-    <div class="subtitle">Chia sẻ thực phẩm – Kết nối & bền vững</div>
+    <div class="content">
+        <div class="card">
+            <div class="card-info">
+                <div class="card-title">trà từ tay</div>
+                <div class="card-detail"><i class="fas fa-balance-scale"></i> Số lượng: 5 yến</div>
+                <div class="card-detail"><i class="fas fa-file-alt"></i> trà điều lính cát</div>
+                <div class="card-detail"><i class="fas fa-user"></i> Nguyễn Văn Tày</div>
+            </div>
+            <button class="btn-detail">Chi tiết</button>
+        </div>
 
-    <input class="input" type="email" placeholder="Email">
-    <input class="input" type="password" placeholder="Mật khẩu">
+        <div class="card">
+            <div class="card-info">
+                <div class="card-title">Bã Mía míc xi</div>
+                <div class="card-detail"><i class="fas fa-balance-scale"></i> Số lượng: 36kg</div>
+                <div class="card-detail"><i class="fas fa-file-alt"></i> giai giòn sần sật</div>
+                <div class="card-detail"><i class="fas fa-user"></i> Phùng Canh Mộ</div>
+            </div>
+            <button class="btn-detail">Chi tiết</button>
+        </div>
 
-    <button class="button">Đăng nhập</button>
+        <div class="card">
+            <div class="card-info">
+                <div class="card-title">Bã Mía míc xi</div>
+                <div class="card-detail"><i class="fas fa-balance-scale"></i> Số lượng: 36kg</div>
+                <div class="card-detail"><i class="fas fa-file-alt"></i> giai giòn sần sật</div>
+                <div class="card-detail"><i class="fas fa-user"></i> Phùng Canh Mộ</div>
+            </div>
+            <button class="btn-detail">Chi tiết</button>
+        </div>
 
-    <div class="social">
-      <div class="google">G</div>
-      <div class="facebook">f</div>
+        <div class="card">
+            <div class="card-info">
+                <div class="card-title">test ảnh</div>
+                <div class="card-detail"><i class="fas fa-balance-scale"></i> Số lượng: 1</div>
+                <div class="card-detail"><i class="fas fa-file-alt"></i> ảnh</div>
+                <div class="card-detail"><i class="fas fa-user"></i> Tày A Man</div>
+            </div>
+            <button class="btn-detail">Chi tiết</button>
+        </div>
     </div>
 
-    <div class="register">
-      Chưa có tài khoản? <span>Đăng ký</span>
+    <div class="fab">
+        <i class="fas fa-plus"></i>
     </div>
-  </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item active">
+            <i class="fas fa-home"></i>
+            Trang chủ
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-search"></i>
+        </div>
+        <div class="nav-item">
+            <i class="far fa-comment-alt"></i>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-user"></i>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
