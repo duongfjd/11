@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Share - Trang Cá Nhân</title>
+    <title>Food Share - Đăng bài</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
@@ -22,10 +22,10 @@
         }
 
         /* Khung chứa 360x800 */
-        .profile-container {
+        .app-container {
             width: 360px;
             height: 800px;
-            background-color: #f8f9fa;
+            background-color: #fdf8ff;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -36,196 +36,150 @@
         /* Header */
         .header {
             background-color: #4CAF50;
-            padding: 15px 20px;
-            height: 65px;
+            padding: 0 15px;
+            height: 60px;
             display: flex;
             align-items: center;
-        }
-
-        .header h1 {
-            color: #1a1a1a;
-            font-size: 22px;
-            font-weight: 500;
-        }
-
-        /* Avatar Section */
-        .avatar-section {
-            display: flex;
-            justify-content: center;
-            padding: 30px 0;
-        }
-
-        .profile-pic {
-            width: 120px;
-            height: 120px;
-            background-color: #ece4ff;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .profile-pic i {
-            font-size: 60px;
-            color: #9e9e9e;
-        }
-
-        /* Form Fields */
-        .form-container {
-            padding: 0 20px;
-            display: flex;
-            flex-direction: column;
             gap: 20px;
         }
 
+        .header i {
+            font-size: 20px;
+            color: #1a1a1a;
+            cursor: pointer;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+
+        /* Form Content */
+        .form-content {
+            flex: 1;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto;
+        }
+
+        /* Input Groups */
         .input-group {
-            position: relative;
-            width: 100%;
-        }
-
-        .input-group label {
-            position: absolute;
-            top: -10px;
-            left: 15px;
-            background: #f8f9fa;
-            padding: 0 5px;
-            font-size: 12px;
-            color: #888;
-            z-index: 1;
-        }
-
-        .input-field {
-            width: 100%;
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1px solid #777;
+            border-radius: 8px;
             padding: 12px 15px;
-            border: 1px solid #999;
-            border-radius: 12px;
-            font-size: 16px;
+            gap: 15px;
+        }
+
+        .input-group i {
+            font-size: 20px;
+            color: #444;
+            width: 24px;
+            text-align: center;
+        }
+
+        .input-group input, .input-group textarea {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 15px;
             color: #333;
             background: transparent;
         }
 
-        .input-field::placeholder {
-            color: #bbb;
+        /* Textarea specific */
+        .textarea-group {
+            align-items: flex-start;
+            min-height: 120px;
         }
 
-        /* Menu Buttons */
-        .menu-section {
-            padding: 25px 20px;
+        /* Image Upload Box */
+        .upload-box {
+            border: 1px solid #4CAF50;
+            border-radius: 12px;
+            height: 160px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 16px;
-            font-weight: 500;
-            display: flex;
             justify-content: center;
             align-items: center;
             gap: 10px;
+            background-color: transparent;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 5px;
         }
 
-        .btn-edit { background-color: #2196F3; }
-        .btn-manage { background-color: #FFA726; }
-        .btn-settings { background-color: #9C27B0; }
-        .btn-logout { background-color: #F44336; }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            margin-top: auto;
-            height: 70px;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-top: 1px solid #eee;
-        }
-
-        .nav-item {
-            text-align: center;
-            color: #888;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .nav-item.active {
+        .upload-box i {
+            font-size: 40px;
             color: #4CAF50;
         }
 
-        .nav-item i { font-size: 22px; }
-        .nav-item span { font-size: 11px; }
+        .upload-box span {
+            font-size: 14px;
+            color: #444;
+        }
+
+        /* Submit Button Container */
+        .footer {
+            padding: 20px 15px 40px 15px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
 
     </style>
 </head>
 <body>
 
-<div class="profile-container">
+<div class="app-container">
     <div class="header">
-        <h1>Trang cá nhân</h1>
+        <i class="fas fa-arrow-left"></i>
+        <h1>Đăng bài chia sẻ</h1>
     </div>
 
-    <div class="avatar-section">
-        <div class="profile-pic">
-            <i class="fas fa-user"></i>
+    <div class="form-content">
+        <div class="input-group">
+            <i class="fas fa-utensils"></i>
+            <input type="text" placeholder="Tên nguyên liệu *">
+        </div>
+
+        <div class="input-group">
+            <i class="fas fa-balance-scale"></i>
+            <input type="text" placeholder="Số lượng *">
+        </div>
+
+        <div class="input-group">
+            <i class="fas fa-map-marker-alt"></i>
+            <input type="text" placeholder="Địa chỉ *">
+        </div>
+
+        <div class="input-group textarea-group">
+            <i class="fas fa-file-alt"></i>
+            <textarea placeholder="Mô tả thêm"></textarea>
+        </div>
+
+        <div class="upload-box">
+            <i class="fas fa-image"></i>
+            <span>Chọn ảnh sản phẩm</span>
         </div>
     </div>
 
-    <div class="form-container">
-        <div class="input-group">
-            <label>Họ tên</label>
-            <input type="text" class="input-field" value="Tú Người Thầy">
-        </div>
-        <div class="input-group">
-            <label>Email</label>
-            <input type="text" class="input-field" value="duong@gmail.com">
-        </div>
-        <div class="input-group">
-            <input type="text" class="input-field" placeholder="SĐT">
-        </div>
-        <div class="input-group">
-            <input type="text" class="input-field" placeholder="Địa chỉ">
-        </div>
-    </div>
-
-    <div class="menu-section">
-        <button class="btn btn-edit">
-            <i class="fas fa-pencil-alt"></i> Chỉnh sửa
-        </button>
-        <button class="btn btn-manage">
-            <i class="fas fa-list-alt"></i> Quản lý bài đăng
-        </button>
-        <button class="btn btn-settings">
-            <i class="fas fa-cog"></i> Cài đặt
-        </button>
-        <button class="btn btn-logout">
-            <i class="fas fa-sign-out-alt"></i> Đăng xuất
-        </button>
-    </div>
-
-    <div class="bottom-nav">
-        <div class="nav-item">
-            <i class="fas fa-home"></i>
-        </div>
-        <div class="nav-item">
-            <i class="fas fa-search"></i>
-        </div>
-        <div class="nav-item">
-            <i class="fas fa-comment-alt"></i>
-        </div>
-        <div class="nav-item active">
-            <i class="fas fa-user"></i>
-            <span>Cá nhân</span>
-        </div>
+    <div class="footer">
+        <button class="submit-btn">Đăng bài</button>
     </div>
 </div>
 
