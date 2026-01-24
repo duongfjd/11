@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Share - Đăng bài</title>
+    <title>Food Share - Chi tiết sản phẩm</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
@@ -22,14 +22,14 @@
         }
 
         /* Khung chứa 360x800 */
-        .app-container {
+        .detail-container {
             width: 360px;
             height: 800px;
             background-color: #fdf8ff;
             display: flex;
             flex-direction: column;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto;
             border: 1px solid #ccc;
         }
 
@@ -37,16 +37,18 @@
         .header {
             background-color: #4CAF50;
             padding: 0 15px;
-            height: 60px;
+            min-height: 60px;
             display: flex;
             align-items: center;
             gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         .header i {
             font-size: 20px;
             color: #1a1a1a;
-            cursor: pointer;
         }
 
         .header h1 {
@@ -55,131 +57,180 @@
             color: #1a1a1a;
         }
 
-        /* Form Content */
-        .form-content {
-            flex: 1;
+        /* Content Area */
+        .content {
             padding: 20px 15px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            overflow-y: auto;
+            gap: 20px;
         }
 
-        /* Input Groups */
-        .input-group {
+        /* Thẻ thông tin chính */
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .info-item {
             display: flex;
             align-items: center;
-            background: white;
-            border: 1px solid #777;
-            border-radius: 8px;
-            padding: 12px 15px;
             gap: 15px;
         }
 
-        .input-group i {
-            font-size: 20px;
-            color: #444;
-            width: 24px;
+        .info-item i {
+            font-size: 22px;
+            color: #4CAF50;
+            width: 30px;
             text-align: center;
         }
 
-        .input-group input, .input-group textarea {
-            border: none;
-            outline: none;
-            width: 100%;
-            font-size: 15px;
+        .label {
+            font-size: 12px;
+            color: #999;
+            display: block;
+        }
+
+        .value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #eee;
+            margin-left: 45px;
+        }
+
+        /* Mô tả chi tiết */
+        .section-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .desc-box {
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 14px;
             color: #333;
-            background: transparent;
         }
 
-        /* Textarea specific */
-        .textarea-group {
-            align-items: flex-start;
-            min-height: 120px;
-        }
-
-        /* Image Upload Box */
-        .upload-box {
-            border: 1px solid #4CAF50;
+        /* Thông tin người đăng */
+        .user-card {
+            background: #fdf2ff; /* Màu nền tím nhạt giống ảnh */
             border-radius: 12px;
-            height: 160px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
             gap: 10px;
-            background-color: transparent;
-            cursor: pointer;
-            margin-top: 5px;
         }
 
-        .upload-box i {
-            font-size: 40px;
-            color: #4CAF50;
-        }
-
-        .upload-box span {
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-size: 14px;
-            color: #444;
+            color: #333;
         }
 
-        /* Submit Button Container */
+        .user-item i {
+            color: #4CAF50;
+            width: 18px;
+        }
+
+        /* Hình ảnh minh họa */
+        .product-image {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            object-fit: cover;
+            background-color: #ddd;
+        }
+
+        /* Nút Liên hệ */
         .footer {
-            padding: 20px 15px 40px 15px;
+            padding: 0 15px 30px 15px;
+            margin-top: auto;
         }
 
-        .submit-btn {
+        .contact-btn {
             width: 100%;
             background-color: #4CAF50;
             color: white;
             border: none;
             padding: 15px;
-            border-radius: 30px;
-            font-size: 18px;
+            border-radius: 10px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
     </style>
 </head>
 <body>
 
-<div class="app-container">
+<div class="detail-container">
     <div class="header">
         <i class="fas fa-arrow-left"></i>
-        <h1>Đăng bài chia sẻ</h1>
+        <h1>Chi tiết sản phẩm</h1>
     </div>
 
-    <div class="form-content">
-        <div class="input-group">
-            <i class="fas fa-utensils"></i>
-            <input type="text" placeholder="Tên nguyên liệu *">
+    <div class="content">
+        <div class="info-card">
+            <div class="info-item">
+                <i class="fas fa-utensils"></i>
+                <div>
+                    <span class="label">Tên sản phẩm</span>
+                    <span class="value">Bã Mía míc xi</span>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="info-item">
+                <i class="fas fa-balance-scale"></i>
+                <div>
+                    <span class="label">Số lượng</span>
+                    <span class="value">36kg</span>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                    <span class="label">Khu vực</span>
+                    <span class="value">120 yên lãng</span>
+                </div>
+            </div>
         </div>
 
-        <div class="input-group">
-            <i class="fas fa-balance-scale"></i>
-            <input type="text" placeholder="Số lượng *">
+        <div>
+            <h2 class="section-title">Mô tả chi tiết</h2>
+            <div class="desc-box">giai giòn sần sật</div>
         </div>
 
-        <div class="input-group">
-            <i class="fas fa-map-marker-alt"></i>
-            <input type="text" placeholder="Địa chỉ *">
+        <div class="user-card">
+            <h2 class="section-title" style="font-size: 14px;">Thông tin người đăng</h2>
+            <div class="user-item">
+                <i class="fas fa-user"></i>
+                <span>Phùng Canh Mộ</span>
+            </div>
+            <div class="user-item">
+                <i class="far fa-clock"></i>
+                <span>4 giờ trước</span>
+            </div>
         </div>
 
-        <div class="input-group textarea-group">
-            <i class="fas fa-file-alt"></i>
-            <textarea placeholder="Mô tả thêm"></textarea>
-        </div>
+        <img src="https://via.placeholder.com/330x180/666666/FFFFFF?text=Product+Image" alt="Sản phẩm" class="product-image">
 
-        <div class="upload-box">
-            <i class="fas fa-image"></i>
-            <span>Chọn ảnh sản phẩm</span>
+        <div class="footer">
+            <button class="contact-btn">Liên hệ người đăng</button>
         </div>
-    </div>
-
-    <div class="footer">
-        <button class="submit-btn">Đăng bài</button>
     </div>
 </div>
 
