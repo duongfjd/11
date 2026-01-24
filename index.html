@@ -1,150 +1,143 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Xác nhận hành động</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-  html, body {
-    margin: 0; padding: 0;
-    height: 100%;
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #00bcd4 0%, #009688 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .modal-content {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 12px 24px rgba(0,0,0,0.25);
-    width: 360px;
-    max-width: 90%;
-    padding: 30px 35px;
-    text-align: center;
-    animation: fadeInScale 0.3s ease forwards;
-  }
-
-  @keyframes fadeInScale {
-    0% {
-      opacity: 0;
-      transform: scale(0.8);
+  <meta charset="UTF-8">
+  <title>Food Share - Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
     }
-    100% {
-      opacity: 1;
-      transform: scale(1);
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-  }
 
-  h2 {
-    margin: 0 0 18px;
-    font-weight: 700;
-    font-size: 24px;
-    color: #333;
-  }
-
-  p {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 30px;
-    line-height: 1.4;
-  }
-
-  .modal-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-
-  button {
-    cursor: pointer;
-    border-radius: 8px;
-    border: none;
-    font-weight: 700;
-    font-size: 15px;
-    padding: 12px 28px;
-    transition: background-color 0.25s ease, box-shadow 0.25s ease;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-  }
-
-  button.confirm {
-    background: #00b36a;
-    color: white;
-    box-shadow: 0 6px 16px rgba(0,179,106,0.5);
-  }
-  button.confirm:hover {
-    background: #009954;
-    box-shadow: 0 8px 20px rgba(0,153,84,0.7);
-  }
-  button.confirm:active {
-    background: #007d4a;
-    box-shadow: 0 4px 10px rgba(0,125,74,0.7);
-  }
-
-  button.cancel {
-    background: #f0f0f0;
-    color: #666;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
-  }
-  button.cancel:hover {
-    background: #e0e0e0;
-    color: #444;
-  }
-  button.cancel:active {
-    background: #d0d0d0;
-  }
-
-  /* Responsive */
-  @media (max-width: 400px) {
-    .modal-content {
-      padding: 25px 20px;
-      width: 90%;
+    .app {
+      width: 360px;
+      height: 800px;
+      background: linear-gradient(180deg, #7ecbff 0%, #ffd1dc 100%);
+      border-radius: 16px;
+      padding: 40px 24px;
+      color: white;
     }
-    button {
-      padding: 10px 20px;
+
+    .logo {
+      width: 96px;
+      height: 96px;
+      background: white;
+      border-radius: 24px;
+      margin: 40px auto 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo span {
+      font-size: 48px;
+      color: #4f8cff;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 8px 0;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 32px;
+    }
+
+    .input {
+      width: 100%;
+      height: 48px;
+      border-radius: 12px;
+      border: none;
+      padding: 0 16px;
+      margin-bottom: 16px;
       font-size: 14px;
     }
-  }
-</style>
+
+    .button {
+      width: 100%;
+      height: 52px;
+      border-radius: 14px;
+      border: none;
+      background: #4f8cff;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .social {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 24px 0;
+    }
+
+    .social div {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .google { color: #db4437; }
+    .facebook { color: #1877f2; }
+
+    .register {
+      text-align: center;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .register span {
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
 
-<div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
-  <h2 id="modalTitle">Xác nhận hành động</h2>
-  <p id="modalDesc">Bạn có chắc chắn muốn thực hiện hành động này?</p>
-  <div class="modal-buttons">
-    <button class="confirm" id="confirmBtn">Xác nhận</button>
-    <button class="cancel" id="cancelBtn">Hủy bỏ</button>
+  <div class="app">
+    <div class="logo">
+      <span>🍴</span>
+    </div>
+
+    <h1>Food Share</h1>
+    <div class="subtitle">Chia sẻ thực phẩm – Kết nối & bền vững</div>
+
+    <input class="input" type="email" placeholder="Email">
+    <input class="input" type="password" placeholder="Mật khẩu">
+
+    <button class="button">Đăng nhập</button>
+
+    <div class="social">
+      <div class="google">G</div>
+      <div class="facebook">f</div>
+    </div>
+
+    <div class="register">
+      Chưa có tài khoản? <span>Đăng ký</span>
+    </div>
   </div>
-</div>
-
-<script>
-  const confirmBtn = document.getElementById('confirmBtn');
-  const cancelBtn = document.getElementById('cancelBtn');
-
-  confirmBtn.addEventListener('click', () => {
-    if(window.opener && !window.opener.closed){
-      window.opener.postMessage({confirmed: true}, '*');
-    }
-    window.close();
-  });
-
-  cancelBtn.addEventListener('click', () => {
-    if(window.opener && !window.opener.closed){
-      window.opener.postMessage({confirmed: false}, '*');
-    }
-    window.close();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape'){
-      cancelBtn.click();
-    }
-  });
-</script>
 
 </body>
 </html>
