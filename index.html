@@ -2,143 +2,222 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Share - Đăng ký</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Báo Cáo Tin Tức - Articles Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        /* Khung chứa 360x800 với Gradient nền */
-        .auth-container {
-            width: 360px;
-            height: 800px;
-            background: linear-gradient(180deg, #4facfe 0%, #fbc2eb 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 80px 30px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #ccc;
-        }
-
-        /* Logo & Brand */
-        .logo-box {
-            width: 100px;
-            height: 100px;
-            background-color: white;
-            border-radius: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-        }
-
-        .logo-box i {
-            font-size: 50px;
-            color: #4facfe; /* Màu xanh trùng với gradient đầu */
-        }
-
-        .brand-name {
-            color: white;
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .slogan {
-            color: white;
-            font-size: 14px;
-            text-align: center;
-            margin-bottom: 50px;
-            opacity: 0.9;
-        }
-
-        /* Form Inputs */
-        .form-auth {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .input-item {
-            width: 100%;
-            padding: 15px 20px;
-            border-radius: 15px;
-            border: none;
-            background-color: white;
-            font-size: 16px;
-            outline: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .input-item::placeholder {
-            color: #888;
-        }
-
-        /* Button */
-        .btn-register {
-            width: 100%;
-            padding: 15px;
-            border-radius: 15px;
-            border: none;
-            background-color: white;
-            color: #4facfe;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 10px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        /* Bottom Text */
-        .bottom-text {
-            margin-top: 25px;
-            color: white;
-            font-size: 14px;
-        }
-
-        .bottom-text span {
-            font-weight: bold;
-            text-decoration: underline;
-            cursor: pointer;
-        }
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        /* Tối ưu cuộn trên di động */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        /* Loại bỏ highlight màu xanh khi chạm trên Android */
+        * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
 
-<div class="auth-container">
-    <div class="logo-box">
-        <i class="fas fa-utensils"></i>
+    <!-- Header -->
+    <header class="bg-blue-600 text-white shadow-md sticky top-0 z-40 p-4 md:p-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-xl md:text-2xl font-bold tracking-tight">Tin Tức 24H</h1>
+                <p id="status" class="text-[10px] md:text-xs text-blue-100 opacity-80 uppercase tracking-widest">Đang tải...</p>
+            </div>
+            <button onclick="fetchArticles()" class="p-2 bg-blue-500 rounded-full hover:bg-blue-400 transition-colors shadow-inner">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <!-- Grid hiển thị danh sách -->
+        <div id="articles-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Loading Skeleton -->
+            <div class="animate-pulse bg-white h-80 rounded-2xl shadow-sm border border-slate-100"></div>
+            <div class="animate-pulse bg-white h-80 rounded-2xl shadow-sm border border-slate-100"></div>
+            <div class="animate-pulse bg-white h-80 rounded-2xl shadow-sm border border-slate-100"></div>
+        </div>
+    </main>
+
+    <!-- MODAL CHI TIẾT BÀI BÁO (Tối ưu cho Android) -->
+    <div id="article-modal" class="fixed inset-0 z-50 hidden flex flex-col bg-white">
+        <!-- Header Modal -->
+        <div class="flex items-center justify-between p-4 border-b border-slate-100 bg-white sticky top-0 z-10">
+            <button onclick="closeModal()" class="p-2 text-slate-600 hover:bg-slate-100 rounded-full transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <div class="flex gap-3">
+                <button id="tts-button" onclick="toggleTTS()" class="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full font-bold text-xs uppercase tracking-wider active:scale-95 transition">
+                    <span id="tts-icon">🔊 Đọc báo</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Nội dung chi tiết (Có thể cuộn) -->
+        <div id="modal-content" class="flex-grow overflow-y-auto p-5 md:p-8 custom-scrollbar">
+            <div class="max-w-2xl mx-auto">
+                <img id="modal-image" class="w-full h-56 md:h-80 object-cover rounded-2xl mb-6 shadow-sm" src="" alt="">
+                <div id="modal-meta" class="text-xs font-bold text-blue-500 mb-2 uppercase tracking-widest"></div>
+                <h2 id="modal-title" class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-4 leading-tight"></h2>
+                <div class="flex items-center gap-4 text-xs text-slate-400 mb-8 pb-4 border-b border-slate-50">
+                    <span id="modal-author"></span>
+                    <span id="modal-date"></span>
+                </div>
+                <div id="modal-body" class="text-slate-700 leading-relaxed text-lg space-y-4">
+                    <!-- Nội dung bài báo -->
+                </div>
+                <div class="mt-12">
+                    <a id="modal-link" href="#" target="_blank" class="block w-full text-center py-4 bg-slate-900 text-white font-bold rounded-xl shadow-lg active:bg-slate-800 transition">
+                        XEM BÀI VIẾT GỐC
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <h1 class="brand-name">Food Share</h1>
-    <p class="slogan">Chia sẻ thực phẩm – Kết nối & bền vững</p>
+    <script>
+        const SUPABASE_URL = 'https://wzpixqfyjfedbqbqcczk.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_xzAsDbdliS1HEQ0Dsaelow_4UeogEf0';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    <div class="form-auth">
-        <input type="email" class="input-item" placeholder="Email">
-        <input type="password" class="input-item" placeholder="Mật khẩu">
-	<input type="password" class="input-item" placeholder="Nhập Lại Mật khẩu">
-        <button class="btn-register">Đăng ký</button>
-    </div>
+        let currentArticles = [];
+        let synth = window.speechSynthesis;
+        let utterance = null;
+        let isSpeaking = false;
 
-    <p class="bottom-text">Đã có tài khoản? <span>Đăng nhập</span></p>
-</div>
+        async function fetchArticles() {
+            const container = document.getElementById('articles-container');
+            const statusText = document.getElementById('status');
+            
+            statusText.innerText = "Đang cập nhật...";
 
+            try {
+                const { data, error } = await supabaseClient
+                    .from('articles')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+                currentArticles = data || [];
+
+                if (currentArticles.length === 0) {
+                    container.innerHTML = `<p class="col-span-full text-center py-20 text-slate-400">Không có dữ liệu</p>`;
+                    return;
+                }
+
+                statusText.innerText = `Tìm thấy ${currentArticles.length} bài viết`;
+                container.innerHTML = "";
+
+                currentArticles.forEach((article, index) => {
+                    const card = document.createElement('div');
+                    card.className = "bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden active:scale-[0.98] transition-transform duration-200 flex flex-col cursor-pointer";
+                    card.onclick = () => openModal(index);
+                    
+                    const title = article.title_vi || article.original_title || 'No Title';
+                    const summary = article.summary_vi || 'Nhấn để xem chi tiết nội dung bài báo này...';
+                    const img = article.url_to_image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=400';
+
+                    card.innerHTML = `
+                        <img class="h-44 w-full object-cover" src="${img}" alt="news">
+                        <div class="p-5 flex-grow">
+                            <div class="text-[10px] font-bold text-blue-500 uppercase mb-2">${article.source_name || 'Tin tức'}</div>
+                            <h3 class="font-bold text-slate-900 leading-snug line-clamp-2 mb-2">${title}</h3>
+                            <p class="text-slate-500 text-xs line-clamp-2">${summary}</p>
+                        </div>
+                        <div class="px-5 py-3 bg-slate-50/50 flex justify-between items-center text-[10px] text-slate-400">
+                            <span>${new Date(article.published_at || article.created_at).toLocaleDateString('vi-VN')}</span>
+                            <span class="font-bold text-blue-600">XEM THÊM</span>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (err) {
+                statusText.innerText = "Lỗi kết nối";
+                console.error(err);
+            }
+        }
+
+        function openModal(index) {
+            const article = currentArticles[index];
+            const modal = document.getElementById('article-modal');
+            
+            document.getElementById('modal-image').src = article.url_to_image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=400';
+            document.getElementById('modal-title').innerText = article.title_vi || article.original_title;
+            document.getElementById('modal-meta').innerText = article.source_name || 'TIN TỨC';
+            document.getElementById('modal-author').innerText = `Tác giả: ${article.author || 'N/A'}`;
+            document.getElementById('modal-date').innerText = `Ngày: ${new Date(article.published_at || article.created_at).toLocaleDateString('vi-VN')}`;
+            document.getElementById('modal-body').innerText = article.summary_vi || 'Nội dung bài viết hiện chưa được cập nhật đầy đủ.';
+            document.getElementById('modal-link').href = article.url;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Chặn cuộn trang chính
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('article-modal');
+            stopTTS();
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // TEXT TO SPEECH LOGIC
+        function toggleTTS() {
+            if (isSpeaking) {
+                stopTTS();
+            } else {
+                startTTS();
+            }
+        }
+
+        function startTTS() {
+            const text = document.getElementById('modal-title').innerText + ". " + document.getElementById('modal-body').innerText;
+            if (!text) return;
+
+            // Hủy các lệnh đọc cũ
+            synth.cancel();
+
+            utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'vi-VN';
+            utterance.rate = 1.0;
+            utterance.pitch = 1.0;
+
+            // Chủ động tìm và chọn giọng đọc Tiếng Việt có sẵn trên thiết bị
+            const voices = synth.getVoices();
+            const vietnameseVoice = voices.find(voice => voice.lang === 'vi-VN' || voice.lang === 'vi');
+            
+            if (vietnameseVoice) {
+                utterance.voice = vietnameseVoice;
+            } else {
+                console.warn("Thiết bị không có sẵn giọng đọc Tiếng Việt mặc định. Sẽ dùng giọng hệ thống thay thế.");
+            }
+
+            utterance.onstart = () => {
+                isSpeaking = true;
+                document.getElementById('tts-icon').innerText = "⏹ Dừng đọc";
+                document.getElementById('tts-button').classList.replace('bg-blue-50', 'bg-red-50');
+                document.getElementById('tts-button').classList.replace('text-blue-600', 'text-red-600');
+            };
+
+            utterance.onend = () => {
+                stopTTS();
+            };
+
+            synth.speak(utterance);
+        }
+
+        function stopTTS() {
+            synth.cancel();
+            isSpeaking = false;
+            document.getElementById('tts-icon').innerText = "🔊 Đọc báo";
+            const btn = document.getElementById('tts-button');
+            btn.classList.add('bg-blue-50', 'text-blue-600');
+            btn.classList.remove('bg-red-50', 'text-red-600');
+        }
+
+        window.onload = fetchArticles;
+    </script>
 </body>
 </html>
