@@ -2,222 +2,503 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Báo Cáo Tin Tức - Articles Report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>NewsFlow Horizon — Trải nghiệm tin tức đa chiều</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        /* Tối ưu cuộn trên di động */
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        /* Loại bỏ highlight màu xanh khi chạm trên Android */
-        * { -webkit-tap-highlight-color: transparent; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+        
+        * {
+            transition: background-color 0.25s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        :root {
+            --bg-light: #faf9fe;
+            --card-light: #ffffff;
+            --text-light: #0a0c12;
+            --subtle-light: #5b6e8c;
+            --border-light: #eef2f6;
+            
+            --bg-dark: #0b0e17;
+            --card-dark: #131824;
+            --text-dark: #edf2f7;
+            --subtle-dark: #8a99b4;
+            --border-dark: #232a3a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background 0.3s, color 0.2s;
+        }
+
+        body.light {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body.dark {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        /* custom glass & card styles */
+        .card-glass {
+            background: var(--card-light);
+            border: 1px solid var(--border-light);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        body.dark .card-glass {
+            background: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+
+        .card-glass:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.15);
+            border-color: #6366f1;
+        }
+
+        /* reading progress */
+        #reading-progress {
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #c084fc, #ec4899);
+            width: 0%;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 8px rgba(99,102,241,0.5);
+        }
+
+        /* modal backdrop blur */
+        #article-modal {
+            transition: opacity 0.4s ease, visibility 0.4s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.98) translateY(30px);
+        }
+        #article-modal.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+        }
+
+        /* skeleton shimmer cải tiến */
+        .skeleton-card {
+            background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+            background-size: 200% 100%;
+            animation: shimmer 1.2s infinite linear;
+            border-radius: 28px;
+        }
+        body.dark .skeleton-card {
+            background: linear-gradient(110deg, #1a1f2c 8%, #252c3c 18%, #1a1f2c 33%);
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* custom scrollbar */
+        .custom-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 12px;
+        }
+        body.dark .custom-scroll::-webkit-scrollbar-thumb {
+            background: #2d3a4e;
+        }
+
+        /* active filter chip */
+        .chip-active {
+            background-color: #6366f1 !important;
+            color: white !important;
+            border-color: #6366f1 !important;
+            box-shadow: 0 6px 12px -6px rgba(99,102,241,0.3);
+        }
+
+        /* back to top */
+        .back-to-top {
+            position: fixed;
+            bottom: 28px;
+            right: 24px;
+            z-index: 98;
+            background: #6366f1;
+            color: white;
+            border-radius: 60px;
+            padding: 12px;
+            box-shadow: 0 12px 25px -8px rgba(99,102,241,0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* line clamp */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+<body class="light">
 
-    <!-- Header -->
-    <header class="bg-blue-600 text-white shadow-md sticky top-0 z-40 p-4 md:p-6">
-        <div class="container mx-auto flex justify-between items-center">
-            <div>
-                <h1 class="text-xl md:text-2xl font-bold tracking-tight">Tin Tức 24H</h1>
-                <p id="status" class="text-[10px] md:text-xs text-blue-100 opacity-80 uppercase tracking-widest">Đang tải...</p>
+    <!-- Back to top button -->
+    <div id="backToTop" class="back-to-top">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+    </div>
+
+    <!-- Header nâng cấp với dark mode toggle + tìm kiếm -->
+    <header class="sticky top-0 z-50 bg-white/75 dark:bg-[#0b0e17]/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800/60 shadow-sm">
+        <div class="container mx-auto px-5 md:px-8 py-3 md:py-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <!-- Logo + brand -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 flex items-center justify-center text-white shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v10a2 2 0 01-2 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6M9 17h3"></path></svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-black tracking-tight bg-gradient-to-r from-indigo-700 to-fuchsia-600 dark:from-indigo-400 dark:to-fuchsia-400 bg-clip-text text-transparent">NewsFlow <span class="italic">Horizon</span></h1>
+                        <p id="status" class="text-[9px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mt-0.5">sẵn sàng đồng bộ</p>
+                    </div>
+                </div>
+
+                <!-- Search + action group -->
+                <div class="flex items-center gap-3 flex-1 justify-end max-w-md">
+                    <div class="relative w-full max-w-[220px] md:max-w-xs">
+                        <input type="text" id="search-input" placeholder="Tìm kiếm bài viết..." class="w-full py-2 pl-9 pr-3 text-sm rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#10141f] focus:outline-none focus:ring-2 focus:ring-indigo-400/60 transition">
+                        <svg class="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <button onclick="fetchArticles()" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-all" id="refreshBtn">
+                        <svg id="refresh-icon" class="w-5 h-5 text-slate-600 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    </button>
+                    <button id="darkModeToggle" class="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-amber-300 transition-all">
+                        <svg id="dark-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                </div>
             </div>
-            <button onclick="fetchArticles()" class="p-2 bg-blue-500 rounded-full hover:bg-blue-400 transition-colors shadow-inner">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-            </button>
+
+            <!-- Filter chips động -->
+            <div id="filter-chips" class="flex flex-nowrap overflow-x-auto gap-2 mt-4 pb-2 scrollbar-hide">
+                <button data-filter="all" class="filter-chip active-chip px-4 py-1.5 text-xs font-bold rounded-full border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300">Tất cả</button>
+            </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-6">
-        <!-- Grid hiển thị danh sách -->
-        <div id="articles-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Loading Skeleton -->
-            <div class="animate-pulse bg-white h-80 rounded-2xl shadow-sm border border-slate-100"></div>
-            <div class="animate-pulse bg-white h-80 rounded-2xl shadow-sm border border-slate-100"></div>
-            <div class="animate-pulse bg-white h-80 rounded-2xl shadow-sm border border-slate-100"></div>
+    <main class="container mx-auto px-5 md:px-8 py-10">
+        <div class="max-w-2xl mb-10">
+            <h2 class="text-3xl md:text-4xl font-black leading-tight tracking-tight">Thông tin <span class="bg-gradient-to-r from-indigo-500 to-fuchsia-500 bg-clip-text text-transparent">đa chiều</span><br> không giới hạn</h2>
+            <div class="h-1 w-20 bg-gradient-to-r from-indigo-500 to-fuchsia-400 rounded-full mt-4"></div>
+        </div>
+
+        <!-- Articles grid with masonry style -->
+        <div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+            <!-- 3 skeleton cards -->
+            <div class="skeleton-card h-[420px] rounded-3xl"></div>
+            <div class="skeleton-card h-[420px] rounded-3xl"></div>
+            <div class="skeleton-card h-[420px] rounded-3xl"></div>
+        </div>
+
+        <!-- empty state -->
+        <div id="empty-state" class="hidden text-center py-20">
+            <div class="text-6xl mb-4">📭</div>
+            <p class="font-semibold text-slate-500 dark:text-slate-400">Không tìm thấy bài viết phù hợp</p>
+            <button onclick="fetchArticles()" class="mt-4 text-indigo-500 text-sm font-bold">Làm mới</button>
         </div>
     </main>
 
-    <!-- MODAL CHI TIẾT BÀI BÁO (Tối ưu cho Android) -->
-    <div id="article-modal" class="fixed inset-0 z-50 hidden flex flex-col bg-white">
-        <!-- Header Modal -->
-        <div class="flex items-center justify-between p-4 border-b border-slate-100 bg-white sticky top-0 z-10">
-            <button onclick="closeModal()" class="p-2 text-slate-600 hover:bg-slate-100 rounded-full transition">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+    <!-- Modal nâng cấp (full màn hình + interactive) -->
+    <div id="article-modal" class="fixed inset-0 z-[100] bg-white dark:bg-[#0b0e17] flex flex-col">
+        <div id="reading-progress" class="fixed top-0 left-0 z-[120]"></div>
+
+        <div class="sticky top-0 bg-white/90 dark:bg-[#0b0e17]/90 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 px-5 py-3 flex items-center justify-between z-20">
+            <button onclick="closeModal()" class="flex items-center gap-1 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                Quay lại
             </button>
             <div class="flex gap-3">
-                <button id="tts-button" onclick="toggleTTS()" class="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full font-bold text-xs uppercase tracking-wider active:scale-95 transition">
-                    <span id="tts-icon">🔊 Đọc báo</span>
+                <button id="share-modal-btn" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                </button>
+                <button id="tts-button-modal" onclick="toggleTTS()" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-indigo-600 hover:text-white transition">
+                    <svg id="tts-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Nội dung chi tiết (Có thể cuộn) -->
-        <div id="modal-content" class="flex-grow overflow-y-auto p-5 md:p-8 custom-scrollbar">
-            <div class="max-w-2xl mx-auto">
-                <img id="modal-image" class="w-full h-56 md:h-80 object-cover rounded-2xl mb-6 shadow-sm" src="" alt="">
-                <div id="modal-meta" class="text-xs font-bold text-blue-500 mb-2 uppercase tracking-widest"></div>
-                <h2 id="modal-title" class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-4 leading-tight"></h2>
-                <div class="flex items-center gap-4 text-xs text-slate-400 mb-8 pb-4 border-b border-slate-50">
-                    <span id="modal-author"></span>
-                    <span id="modal-date"></span>
+        <div id="modal-content" class="flex-1 overflow-y-auto custom-scroll pb-16" onscroll="updateProgress(this)">
+            <article class="max-w-3xl mx-auto px-5 md:px-8 py-8">
+                <div class="mb-8">
+                    <span id="modal-source" class="inline-block px-3 py-1 text-[11px] font-black rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 uppercase tracking-wider mb-4">Nguồn</span>
+                    <h1 id="modal-title" class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight mb-6">Tiêu đề bài viết</h1>
+                    <div class="flex items-center gap-4 text-sm">
+                        <div class="w-11 h-11 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-white font-bold shadow-md" id="modal-avatar">A</div>
+                        <div>
+                            <p id="modal-author" class="font-bold text-slate-800 dark:text-slate-200">Tác giả</p>
+                            <p id="modal-date" class="text-slate-500 dark:text-slate-400 text-xs"></p>
+                        </div>
+                    </div>
                 </div>
-                <div id="modal-body" class="text-slate-700 leading-relaxed text-lg space-y-4">
-                    <!-- Nội dung bài báo -->
+                <div class="mb-10">
+                    <img id="modal-image" class="w-full aspect-[16/9] object-cover rounded-3xl shadow-2xl shadow-black/5" alt="thumbnail">
                 </div>
-                <div class="mt-12">
-                    <a id="modal-link" href="#" target="_blank" class="block w-full text-center py-4 bg-slate-900 text-white font-bold rounded-xl shadow-lg active:bg-slate-800 transition">
-                        XEM BÀI VIẾT GỐC
-                    </a>
+                <div id="modal-body" class="article-body text-slate-700 dark:text-slate-300 text-[1.05rem] leading-relaxed space-y-5"></div>
+                <div class="mt-14 pt-6 border-t border-slate-200 dark:border-slate-800 text-center">
+                    <a id="modal-link" href="#" target="_blank" class="inline-flex items-center gap-2 px-7 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl transition-all shadow-xl shadow-indigo-200 dark:shadow-indigo-900/30 active:scale-95">Đọc toàn văn gốc →</a>
                 </div>
-            </div>
+            </article>
         </div>
     </div>
 
     <script>
+        // SUPABASE config
         const SUPABASE_URL = 'https://wzpixqfyjfedbqbqcczk.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_xzAsDbdliS1HEQ0Dsaelow_4UeogEf0';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        let currentArticles = [];
+        let articles = [];
+        let currentFilter = 'all';
+        let searchQuery = '';
         let synth = window.speechSynthesis;
-        let utterance = null;
         let isSpeaking = false;
 
-        async function fetchArticles() {
-            const container = document.getElementById('articles-container');
-            const statusText = document.getElementById('status');
-            
-            statusText.innerText = "Đang cập nhật...";
+        // DOM elements
+        const container = document.getElementById('articles-container');
+        const emptyStateDiv = document.getElementById('empty-state');
+        const statusEl = document.getElementById('status');
+        const refreshIcon = document.getElementById('refresh-icon');
+        const searchInput = document.getElementById('search-input');
+        const filterContainer = document.getElementById('filter-chips');
 
+        // Dark mode setup
+        const darkToggle = document.getElementById('darkModeToggle');
+        const setTheme = (isDark) => {
+            if(isDark) {
+                document.body.classList.remove('light');
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                document.body.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            }
+        };
+        const savedTheme = localStorage.getItem('theme');
+        if(savedTheme === 'dark') setTheme(true);
+        else if(savedTheme === 'light') setTheme(false);
+        else if(window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme(true);
+        darkToggle.addEventListener('click', () => {
+            const isDark = document.body.classList.contains('dark');
+            setTheme(!isDark);
+        });
+
+        // fetch + render articles with filter & search
+        async function fetchArticles() {
+            refreshIcon.classList.add('animate-spin');
+            statusEl.innerText = "Đồng bộ dữ liệu...";
             try {
                 const { data, error } = await supabaseClient
                     .from('articles')
                     .select('*')
                     .order('created_at', { ascending: false });
-
-                if (error) throw error;
-                currentArticles = data || [];
-
-                if (currentArticles.length === 0) {
-                    container.innerHTML = `<p class="col-span-full text-center py-20 text-slate-400">Không có dữ liệu</p>`;
-                    return;
-                }
-
-                statusText.innerText = `Tìm thấy ${currentArticles.length} bài viết`;
-                container.innerHTML = "";
-
-                currentArticles.forEach((article, index) => {
-                    const card = document.createElement('div');
-                    card.className = "bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden active:scale-[0.98] transition-transform duration-200 flex flex-col cursor-pointer";
-                    card.onclick = () => openModal(index);
-                    
-                    const title = article.title_vi || article.original_title || 'No Title';
-                    const summary = article.summary_vi || 'Nhấn để xem chi tiết nội dung bài báo này...';
-                    const img = article.url_to_image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=400';
-
-                    card.innerHTML = `
-                        <img class="h-44 w-full object-cover" src="${img}" alt="news">
-                        <div class="p-5 flex-grow">
-                            <div class="text-[10px] font-bold text-blue-500 uppercase mb-2">${article.source_name || 'Tin tức'}</div>
-                            <h3 class="font-bold text-slate-900 leading-snug line-clamp-2 mb-2">${title}</h3>
-                            <p class="text-slate-500 text-xs line-clamp-2">${summary}</p>
-                        </div>
-                        <div class="px-5 py-3 bg-slate-50/50 flex justify-between items-center text-[10px] text-slate-400">
-                            <span>${new Date(article.published_at || article.created_at).toLocaleDateString('vi-VN')}</span>
-                            <span class="font-bold text-blue-600">XEM THÊM</span>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-
+                if(error) throw error;
+                articles = data || [];
+                generateFilterChips();
+                applyFilterAndRender();
+                statusEl.innerText = `📡 cập nhật: ${new Date().toLocaleTimeString('vi-VN')}`;
             } catch (err) {
-                statusText.innerText = "Lỗi kết nối";
+                statusEl.innerText = "⚠️ Lỗi kết nối";
                 console.error(err);
+                container.innerHTML = `<div class="col-span-full text-center p-10 text-red-500">Không thể tải tin tức, hãy thử lại</div>`;
+            } finally {
+                refreshIcon.classList.remove('animate-spin');
             }
         }
 
-        function openModal(index) {
-            const article = currentArticles[index];
-            const modal = document.getElementById('article-modal');
-            
-            document.getElementById('modal-image').src = article.url_to_image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=400';
-            document.getElementById('modal-title').innerText = article.title_vi || article.original_title;
-            document.getElementById('modal-meta').innerText = article.source_name || 'TIN TỨC';
-            document.getElementById('modal-author').innerText = `Tác giả: ${article.author || 'N/A'}`;
-            document.getElementById('modal-date').innerText = `Ngày: ${new Date(article.published_at || article.created_at).toLocaleDateString('vi-VN')}`;
-            document.getElementById('modal-body').innerText = article.summary_vi || 'Nội dung bài viết hiện chưa được cập nhật đầy đủ.';
-            document.getElementById('modal-link').href = article.url;
+        // tạo filter chips dựa trên source_name duy nhất
+        function generateFilterChips() {
+            const sources = [...new Set(articles.map(a => a.source_name).filter(Boolean))];
+            let chipsHtml = `<button data-filter="all" class="filter-chip px-4 py-1.5 text-xs font-bold rounded-full border transition-all bg-white dark:bg-[#11161f] border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300">📰 Tất cả</button>`;
+            sources.forEach(src => {
+                chipsHtml += `<button data-filter="${escapeHtml(src)}" class="filter-chip px-4 py-1.5 text-xs font-bold rounded-full border transition-all bg-white dark:bg-[#11161f] border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300">${src.length>20?src.slice(0,18)+'..':src}</button>`;
+            });
+            filterContainer.innerHTML = chipsHtml;
+            document.querySelectorAll('.filter-chip').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('chip-active', 'bg-indigo-50', 'dark:bg-indigo-950/60', 'text-indigo-700'));
+                    btn.classList.add('chip-active', 'bg-indigo-50', 'dark:bg-indigo-950/60', 'text-indigo-700');
+                    currentFilter = btn.dataset.filter === 'all' ? 'all' : btn.dataset.filter;
+                    applyFilterAndRender();
+                });
+            });
+            // active default
+            const defaultChip = document.querySelector('.filter-chip[data-filter="all"]');
+            if(defaultChip) defaultChip.classList.add('chip-active', 'bg-indigo-50', 'dark:bg-indigo-950/60', 'text-indigo-700');
+        }
 
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Chặn cuộn trang chính
+        function escapeHtml(str) { return str?.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}) || '';}
+
+        function applyFilterAndRender() {
+            let filtered = [...articles];
+            if(currentFilter !== 'all') {
+                filtered = filtered.filter(art => art.source_name === currentFilter);
+            }
+            if(searchQuery.trim() !== '') {
+                const q = searchQuery.trim().toLowerCase();
+                filtered = filtered.filter(art => (art.title_vi || art.original_title || '').toLowerCase().includes(q) || (art.summary_vi || '').toLowerCase().includes(q));
+            }
+            renderArticles(filtered);
+        }
+
+        function renderArticles(articlesToRender) {
+            if(!articlesToRender.length) {
+                container.innerHTML = '';
+                emptyStateDiv.classList.remove('hidden');
+                return;
+            }
+            emptyStateDiv.classList.add('hidden');
+            container.innerHTML = '';
+            articlesToRender.forEach((article, idx) => {
+                const originalIdx = articles.findIndex(a => a.id === article.id);
+                const card = document.createElement('div');
+                card.className = "card-glass rounded-3xl overflow-hidden group cursor-pointer flex flex-col h-full transition-all duration-300";
+                card.onclick = () => openModal(originalIdx !== -1 ? originalIdx : idx);
+                const title = article.title_vi || article.original_title || 'Tin tức mới';
+                const summary = article.summary_vi || 'Nhấn để khám phá nội dung chi tiết và góc nhìn đa chiều.';
+                const image = article.url_to_image || 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=600';
+                const source = article.source_name || 'Horizon';
+                const date = new Date(article.published_at || article.created_at).toLocaleDateString('vi-VN');
+                card.innerHTML = `
+                    <div class="relative overflow-hidden h-52 shrink-0">
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition duration-700" src="${image}" alt="news" loading="lazy">
+                        <div class="absolute top-3 left-3 bg-black/50 backdrop-blur-sm rounded-full px-2 py-0.5 text-[9px] font-bold text-white uppercase">${escapeHtml(source)}</div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <div class="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500 mb-2">
+                            <span>📅 ${date}</span>
+                        </div>
+                        <h3 class="text-xl font-extrabold leading-tight mb-3 line-clamp-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">${escapeHtml(title)}</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-3 mb-4">${escapeHtml(summary)}</p>
+                        <div class="mt-auto flex justify-between items-center">
+                            <span class="text-[11px] font-bold tracking-wide text-indigo-500 opacity-0 group-hover:opacity-100 transition-all">Đọc chuyên sâu →</span>
+                            <div class="w-8 h-8 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-500 group-hover:bg-indigo-600 group-hover:text-white transition">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Modal handlers
+        let currentArticleIndex = null;
+        function openModal(index) {
+            currentArticleIndex = index;
+            const article = articles[index];
+            if(!article) return;
+            document.getElementById('modal-title').innerText = article.title_vi || article.original_title || 'Không có tiêu đề';
+            document.getElementById('modal-image').src = article.url_to_image || 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800';
+            document.getElementById('modal-source').innerText = article.source_name || 'Horizon';
+            const author = article.author || 'Biên tập viên';
+            document.getElementById('modal-author').innerText = author;
+            document.getElementById('modal-avatar').innerText = author.charAt(0).toUpperCase();
+            document.getElementById('modal-date').innerHTML = new Date(article.published_at || article.created_at).toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            const contentRaw = article.full_content_vi || article.summary_vi || 'Nội dung đang được cập nhật, vui lòng đọc tại nguồn.';
+            const formatted = contentRaw.split('\n').filter(p => p.trim()).map(p => `<p>${escapeHtml(p)}</p>`).join('');
+            document.getElementById('modal-body').innerHTML = formatted;
+            const link = document.getElementById('modal-link');
+            link.href = article.url || '#';
+            const modal = document.getElementById('article-modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            const modalScroll = document.getElementById('modal-content');
+            if(modalScroll) modalScroll.scrollTop = 0;
+            document.getElementById('reading-progress').style.width = '0%';
+            stopTTS();
+
+            // share modal event
+            document.getElementById('share-modal-btn').onclick = () => {
+                if(navigator.share) {
+                    navigator.share({ title: article.title_vi, text: article.summary_vi, url: article.url });
+                } else {
+                    alert('Chia sẻ: ' + article.url);
+                }
+            };
         }
 
         function closeModal() {
-            const modal = document.getElementById('article-modal');
             stopTTS();
-            modal.classList.add('hidden');
+            document.getElementById('article-modal').classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
-        // TEXT TO SPEECH LOGIC
-        function toggleTTS() {
-            if (isSpeaking) {
-                stopTTS();
-            } else {
-                startTTS();
-            }
+        function updateProgress(el) {
+            const winScroll = el.scrollTop;
+            const height = el.scrollHeight - el.clientHeight;
+            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            document.getElementById('reading-progress').style.width = scrolled + "%";
         }
 
-        function startTTS() {
-            const text = document.getElementById('modal-title').innerText + ". " + document.getElementById('modal-body').innerText;
-            if (!text) return;
-
-            // Hủy các lệnh đọc cũ
+        function toggleTTS() {
+            if(isSpeaking) { stopTTS(); return; }
+            const title = document.getElementById('modal-title').innerText;
+            const bodyElem = document.getElementById('modal-body');
+            const bodyText = bodyElem.innerText || bodyElem.textContent;
+            const fullText = `${title}. ${bodyText}`;
             synth.cancel();
-
-            utterance = new SpeechSynthesisUtterance(text);
+            const utterance = new SpeechSynthesisUtterance(fullText);
             utterance.lang = 'vi-VN';
-            utterance.rate = 1.0;
-            utterance.pitch = 1.0;
-
-            // Chủ động tìm và chọn giọng đọc Tiếng Việt có sẵn trên thiết bị
-            const voices = synth.getVoices();
-            const vietnameseVoice = voices.find(voice => voice.lang === 'vi-VN' || voice.lang === 'vi');
-            
-            if (vietnameseVoice) {
-                utterance.voice = vietnameseVoice;
-            } else {
-                console.warn("Thiết bị không có sẵn giọng đọc Tiếng Việt mặc định. Sẽ dùng giọng hệ thống thay thế.");
-            }
-
+            utterance.rate = 0.95;
             utterance.onstart = () => {
                 isSpeaking = true;
-                document.getElementById('tts-icon').innerText = "⏹ Dừng đọc";
-                document.getElementById('tts-button').classList.replace('bg-blue-50', 'bg-red-50');
-                document.getElementById('tts-button').classList.replace('text-blue-600', 'text-red-600');
+                const btn = document.getElementById('tts-button-modal');
+                btn.classList.add('bg-rose-500', 'text-white');
+                const iconSvg = document.getElementById('tts-icon');
+                iconSvg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"></path>';
             };
-
-            utterance.onend = () => {
-                stopTTS();
-            };
-
+            utterance.onend = () => stopTTS();
             synth.speak(utterance);
         }
 
         function stopTTS() {
             synth.cancel();
             isSpeaking = false;
-            document.getElementById('tts-icon').innerText = "🔊 Đọc báo";
-            const btn = document.getElementById('tts-button');
-            btn.classList.add('bg-blue-50', 'text-blue-600');
-            btn.classList.remove('bg-red-50', 'text-red-600');
+            const btn = document.getElementById('tts-button-modal');
+            if(btn) btn.classList.remove('bg-rose-500', 'text-white');
+            const iconSvg = document.getElementById('tts-icon');
+            if(iconSvg) iconSvg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>';
         }
 
-        window.onload = fetchArticles;
+        // search event
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            applyFilterAndRender();
+        });
+
+        // back to top
+        const backBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 600) backBtn.classList.add('show');
+            else backBtn.classList.remove('show');
+        });
+        backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        fetchArticles();
     </script>
 </body>
 </html>
