@@ -32,26 +32,15 @@
             transition: background 0.3s, color 0.2s;
         }
 
-        body.light {
-            background-color: var(--bg-light);
-            color: var(--text-light);
-        }
+        body.light { background-color: var(--bg-light); color: var(--text-light); }
+        body.dark { background-color: var(--bg-dark); color: var(--text-dark); }
 
-        body.dark {
-            background-color: var(--bg-dark);
-            color: var(--text-dark);
-        }
-
-        /* custom glass & card styles */
         .card-glass {
             background: var(--card-light);
             border: 1px solid var(--border-light);
             transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
-        body.dark .card-glass {
-            background: var(--card-dark);
-            border-color: var(--border-dark);
-        }
+        body.dark .card-glass { background: var(--card-dark); border-color: var(--border-dark); }
 
         .card-glass:hover {
             transform: translateY(-8px);
@@ -59,7 +48,6 @@
             border-color: #6366f1;
         }
 
-        /* reading progress */
         #reading-progress {
             height: 4px;
             background: linear-gradient(90deg, #6366f1, #c084fc, #ec4899);
@@ -68,50 +56,28 @@
             box-shadow: 0 0 8px rgba(99,102,241,0.5);
         }
 
-        /* modal backdrop blur */
         #article-modal {
             transition: opacity 0.4s ease, visibility 0.4s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             opacity: 0;
             visibility: hidden;
             transform: scale(0.98) translateY(30px);
         }
-        #article-modal.active {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1) translateY(0);
-        }
+        #article-modal.active { opacity: 1; visibility: visible; transform: scale(1) translateY(0); }
 
-        /* skeleton shimmer cải tiến */
         .skeleton-card {
             background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
             background-size: 200% 100%;
             animation: shimmer 1.2s infinite linear;
             border-radius: 28px;
         }
-        body.dark .skeleton-card {
-            background: linear-gradient(110deg, #1a1f2c 8%, #252c3c 18%, #1a1f2c 33%);
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
+        body.dark .skeleton-card { background: linear-gradient(110deg, #1a1f2c 8%, #252c3c 18%, #1a1f2c 33%); }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        /* custom scrollbar */
-        .custom-scroll::-webkit-scrollbar {
-            width: 5px;
-        }
-        .custom-scroll::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .custom-scroll::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 12px;
-        }
-        body.dark .custom-scroll::-webkit-scrollbar-thumb {
-            background: #2d3a4e;
-        }
+        .custom-scroll::-webkit-scrollbar { width: 5px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 12px; }
+        body.dark .custom-scroll::-webkit-scrollbar-thumb { background: #2d3a4e; }
 
-        /* active filter chip */
         .chip-active {
             background-color: #6366f1 !important;
             color: white !important;
@@ -119,7 +85,6 @@
             box-shadow: 0 6px 12px -6px rgba(99,102,241,0.3);
         }
 
-        /* back to top */
         .back-to-top {
             position: fixed;
             bottom: 28px;
@@ -135,38 +100,21 @@
             transition: all 0.2s;
             cursor: pointer;
         }
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-        }
+        .back-to-top.show { opacity: 1; visibility: visible; }
 
-        /* line clamp */
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
 </head>
 <body class="light">
 
-    <!-- Back to top button -->
     <div id="backToTop" class="back-to-top">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
     </div>
 
-    <!-- Header nâng cấp với dark mode toggle + tìm kiếm -->
     <header class="sticky top-0 z-50 bg-white/75 dark:bg-[#0b0e17]/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800/60 shadow-sm">
         <div class="container mx-auto px-5 md:px-8 py-3 md:py-4">
             <div class="flex flex-wrap items-center justify-between gap-3">
-                <!-- Logo + brand -->
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 flex items-center justify-center text-white shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v10a2 2 0 01-2 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6M9 17h3"></path></svg>
@@ -177,7 +125,6 @@
                     </div>
                 </div>
 
-                <!-- Search + action group -->
                 <div class="flex items-center gap-3 flex-1 justify-end max-w-md">
                     <div class="relative w-full max-w-[220px] md:max-w-xs">
                         <input type="text" id="search-input" placeholder="Tìm kiếm bài viết..." class="w-full py-2 pl-9 pr-3 text-sm rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#10141f] focus:outline-none focus:ring-2 focus:ring-indigo-400/60 transition">
@@ -192,7 +139,6 @@
                 </div>
             </div>
 
-            <!-- Filter chips động -->
             <div id="filter-chips" class="flex flex-nowrap overflow-x-auto gap-2 mt-4 pb-2 scrollbar-hide">
                 <button data-filter="all" class="filter-chip active-chip px-4 py-1.5 text-xs font-bold rounded-full border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300">Tất cả</button>
             </div>
@@ -201,19 +147,19 @@
 
     <main class="container mx-auto px-5 md:px-8 py-10">
         <div class="max-w-2xl mb-10">
-            <h2 class="text-3xl md:text-4xl font-black leading-tight tracking-tight">Thông tin <span class="bg-gradient-to-r from-indigo-500 to-fuchsia-500 bg-clip-text text-transparent">đa chiều</span><br> không giới hạn</h2>
+            <h2 class="text-3xl md:text-4xl font-black leading-tight tracking-tight">
+                Thông tin <span class="bg-gradient-to-r from-indigo-500 to-fuchsia-500 bg-clip-text text-transparent">đa chiều</span><br> không giới hạn
+                <span id="article-count" class="inline-block align-middle ml-2 text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400">0</span>
+            </h2>
             <div class="h-1 w-20 bg-gradient-to-r from-indigo-500 to-fuchsia-400 rounded-full mt-4"></div>
         </div>
 
-        <!-- Articles grid with masonry style -->
         <div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-            <!-- 3 skeleton cards -->
             <div class="skeleton-card h-[420px] rounded-3xl"></div>
             <div class="skeleton-card h-[420px] rounded-3xl"></div>
             <div class="skeleton-card h-[420px] rounded-3xl"></div>
         </div>
 
-        <!-- empty state -->
         <div id="empty-state" class="hidden text-center py-20">
             <div class="text-6xl mb-4">📭</div>
             <p class="font-semibold text-slate-500 dark:text-slate-400">Không tìm thấy bài viết phù hợp</p>
@@ -221,10 +167,8 @@
         </div>
     </main>
 
-    <!-- Modal nâng cấp (full màn hình + interactive) -->
     <div id="article-modal" class="fixed inset-0 z-[100] bg-white dark:bg-[#0b0e17] flex flex-col">
         <div id="reading-progress" class="fixed top-0 left-0 z-[120]"></div>
-
         <div class="sticky top-0 bg-white/90 dark:bg-[#0b0e17]/90 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 px-5 py-3 flex items-center justify-between z-20">
             <button onclick="closeModal()" class="flex items-center gap-1 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
@@ -239,7 +183,6 @@
                 </button>
             </div>
         </div>
-
         <div id="modal-content" class="flex-1 overflow-y-auto custom-scroll pb-16" onscroll="updateProgress(this)">
             <article class="max-w-3xl mx-auto px-5 md:px-8 py-8">
                 <div class="mb-8">
@@ -265,7 +208,6 @@
     </div>
 
     <script>
-        // SUPABASE config
         const SUPABASE_URL = 'https://wzpixqfyjfedbqbqcczk.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_xzAsDbdliS1HEQ0Dsaelow_4UeogEf0';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -276,15 +218,15 @@
         let synth = window.speechSynthesis;
         let isSpeaking = false;
 
-        // DOM elements
         const container = document.getElementById('articles-container');
         const emptyStateDiv = document.getElementById('empty-state');
         const statusEl = document.getElementById('status');
         const refreshIcon = document.getElementById('refresh-icon');
         const searchInput = document.getElementById('search-input');
         const filterContainer = document.getElementById('filter-chips');
+        // ELEMENT MỚI
+        const articleCountEl = document.getElementById('article-count');
 
-        // Dark mode setup
         const darkToggle = document.getElementById('darkModeToggle');
         const setTheme = (isDark) => {
             if(isDark) {
@@ -306,7 +248,6 @@
             setTheme(!isDark);
         });
 
-        // fetch + render articles with filter & search
         async function fetchArticles() {
             refreshIcon.classList.add('animate-spin');
             statusEl.innerText = "Đồng bộ dữ liệu...";
@@ -322,14 +263,12 @@
                 statusEl.innerText = `📡 cập nhật: ${new Date().toLocaleTimeString('vi-VN')}`;
             } catch (err) {
                 statusEl.innerText = "⚠️ Lỗi kết nối";
-                console.error(err);
                 container.innerHTML = `<div class="col-span-full text-center p-10 text-red-500">Không thể tải tin tức, hãy thử lại</div>`;
             } finally {
                 refreshIcon.classList.remove('animate-spin');
             }
         }
 
-        // tạo filter chips dựa trên source_name duy nhất
         function generateFilterChips() {
             const sources = [...new Set(articles.map(a => a.source_name).filter(Boolean))];
             let chipsHtml = `<button data-filter="all" class="filter-chip px-4 py-1.5 text-xs font-bold rounded-full border transition-all bg-white dark:bg-[#11161f] border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300">📰 Tất cả</button>`;
@@ -345,7 +284,6 @@
                     applyFilterAndRender();
                 });
             });
-            // active default
             const defaultChip = document.querySelector('.filter-chip[data-filter="all"]');
             if(defaultChip) defaultChip.classList.add('chip-active', 'bg-indigo-50', 'dark:bg-indigo-950/60', 'text-indigo-700');
         }
@@ -365,6 +303,9 @@
         }
 
         function renderArticles(articlesToRender) {
+            // CẬP NHẬT SỐ LƯỢNG TẠI ĐÂY
+            if(articleCountEl) articleCountEl.innerText = articlesToRender.length;
+
             if(!articlesToRender.length) {
                 container.innerHTML = '';
                 emptyStateDiv.classList.remove('hidden');
@@ -379,126 +320,4 @@
                 card.onclick = () => openModal(originalIdx !== -1 ? originalIdx : idx);
                 const title = article.title_vi || article.original_title || 'Tin tức mới';
                 const summary = article.summary_vi || 'Nhấn để khám phá nội dung chi tiết và góc nhìn đa chiều.';
-                const image = article.url_to_image || 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=600';
-                const source = article.source_name || 'Horizon';
-                const date = new Date(article.published_at || article.created_at).toLocaleDateString('vi-VN');
-                card.innerHTML = `
-                    <div class="relative overflow-hidden h-52 shrink-0">
-                        <img class="w-full h-full object-cover group-hover:scale-105 transition duration-700" src="${image}" alt="news" loading="lazy">
-                        <div class="absolute top-3 left-3 bg-black/50 backdrop-blur-sm rounded-full px-2 py-0.5 text-[9px] font-bold text-white uppercase">${escapeHtml(source)}</div>
-                    </div>
-                    <div class="p-5 flex flex-col flex-grow">
-                        <div class="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500 mb-2">
-                            <span>📅 ${date}</span>
-                        </div>
-                        <h3 class="text-xl font-extrabold leading-tight mb-3 line-clamp-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">${escapeHtml(title)}</h3>
-                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-3 mb-4">${escapeHtml(summary)}</p>
-                        <div class="mt-auto flex justify-between items-center">
-                            <span class="text-[11px] font-bold tracking-wide text-indigo-500 opacity-0 group-hover:opacity-100 transition-all">Đọc chuyên sâu →</span>
-                            <div class="w-8 h-8 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-500 group-hover:bg-indigo-600 group-hover:text-white transition">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // Modal handlers
-        let currentArticleIndex = null;
-        function openModal(index) {
-            currentArticleIndex = index;
-            const article = articles[index];
-            if(!article) return;
-            document.getElementById('modal-title').innerText = article.title_vi || article.original_title || 'Không có tiêu đề';
-            document.getElementById('modal-image').src = article.url_to_image || 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800';
-            document.getElementById('modal-source').innerText = article.source_name || 'Horizon';
-            const author = article.author || 'Biên tập viên';
-            document.getElementById('modal-author').innerText = author;
-            document.getElementById('modal-avatar').innerText = author.charAt(0).toUpperCase();
-            document.getElementById('modal-date').innerHTML = new Date(article.published_at || article.created_at).toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-            const contentRaw = article.full_content_vi || article.summary_vi || 'Nội dung đang được cập nhật, vui lòng đọc tại nguồn.';
-            const formatted = contentRaw.split('\n').filter(p => p.trim()).map(p => `<p>${escapeHtml(p)}</p>`).join('');
-            document.getElementById('modal-body').innerHTML = formatted;
-            const link = document.getElementById('modal-link');
-            link.href = article.url || '#';
-            const modal = document.getElementById('article-modal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            const modalScroll = document.getElementById('modal-content');
-            if(modalScroll) modalScroll.scrollTop = 0;
-            document.getElementById('reading-progress').style.width = '0%';
-            stopTTS();
-
-            // share modal event
-            document.getElementById('share-modal-btn').onclick = () => {
-                if(navigator.share) {
-                    navigator.share({ title: article.title_vi, text: article.summary_vi, url: article.url });
-                } else {
-                    alert('Chia sẻ: ' + article.url);
-                }
-            };
-        }
-
-        function closeModal() {
-            stopTTS();
-            document.getElementById('article-modal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function updateProgress(el) {
-            const winScroll = el.scrollTop;
-            const height = el.scrollHeight - el.clientHeight;
-            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-            document.getElementById('reading-progress').style.width = scrolled + "%";
-        }
-
-        function toggleTTS() {
-            if(isSpeaking) { stopTTS(); return; }
-            const title = document.getElementById('modal-title').innerText;
-            const bodyElem = document.getElementById('modal-body');
-            const bodyText = bodyElem.innerText || bodyElem.textContent;
-            const fullText = `${title}. ${bodyText}`;
-            synth.cancel();
-            const utterance = new SpeechSynthesisUtterance(fullText);
-            utterance.lang = 'vi-VN';
-            utterance.rate = 0.95;
-            utterance.onstart = () => {
-                isSpeaking = true;
-                const btn = document.getElementById('tts-button-modal');
-                btn.classList.add('bg-rose-500', 'text-white');
-                const iconSvg = document.getElementById('tts-icon');
-                iconSvg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"></path>';
-            };
-            utterance.onend = () => stopTTS();
-            synth.speak(utterance);
-        }
-
-        function stopTTS() {
-            synth.cancel();
-            isSpeaking = false;
-            const btn = document.getElementById('tts-button-modal');
-            if(btn) btn.classList.remove('bg-rose-500', 'text-white');
-            const iconSvg = document.getElementById('tts-icon');
-            if(iconSvg) iconSvg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>';
-        }
-
-        // search event
-        searchInput.addEventListener('input', (e) => {
-            searchQuery = e.target.value;
-            applyFilterAndRender();
-        });
-
-        // back to top
-        const backBtn = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            if(window.scrollY > 600) backBtn.classList.add('show');
-            else backBtn.classList.remove('show');
-        });
-        backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-        fetchArticles();
-    </script>
-</body>
-</html>
+                const image = article.url_to_image 
