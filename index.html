@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
+        /* … toàn bộ style giữ nguyên … */
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
         
         * {
@@ -42,7 +43,6 @@
             color: var(--text-dark);
         }
 
-        /* custom glass & card styles */
         .card-glass {
             background: var(--card-light);
             border: 1px solid var(--border-light);
@@ -59,7 +59,6 @@
             border-color: #6366f1;
         }
 
-        /* reading progress */
         #reading-progress {
             height: 4px;
             background: linear-gradient(90deg, #6366f1, #c084fc, #ec4899);
@@ -68,7 +67,6 @@
             box-shadow: 0 0 8px rgba(99,102,241,0.5);
         }
 
-        /* modal backdrop blur */
         #article-modal {
             transition: opacity 0.4s ease, visibility 0.4s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             opacity: 0;
@@ -81,7 +79,6 @@
             transform: scale(1) translateY(0);
         }
 
-        /* skeleton shimmer cải tiến */
         .skeleton-card {
             background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
             background-size: 200% 100%;
@@ -96,7 +93,6 @@
             100% { background-position: -200% 0; }
         }
 
-        /* custom scrollbar */
         .custom-scroll::-webkit-scrollbar {
             width: 5px;
         }
@@ -111,7 +107,6 @@
             background: #2d3a4e;
         }
 
-        /* active filter chip */
         .chip-active {
             background-color: #6366f1 !important;
             color: white !important;
@@ -119,7 +114,6 @@
             box-shadow: 0 6px 12px -6px rgba(99,102,241,0.3);
         }
 
-        /* back to top */
         .back-to-top {
             position: fixed;
             bottom: 28px;
@@ -140,7 +134,6 @@
             visibility: visible;
         }
 
-        /* line clamp */
         .line-clamp-2 {
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -162,7 +155,7 @@
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
     </div>
 
-    <!-- Header nâng cấp với dark mode toggle + tìm kiếm -->
+    <!-- Header giữ nguyên, chỉ thêm hiển thị tổng số bài ở dưới tiêu đề chính -->
     <header class="sticky top-0 z-50 bg-white/75 dark:bg-[#0b0e17]/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800/60 shadow-sm">
         <div class="container mx-auto px-5 md:px-8 py-3 md:py-4">
             <div class="flex flex-wrap items-center justify-between gap-3">
@@ -200,9 +193,18 @@
     </header>
 
     <main class="container mx-auto px-5 md:px-8 py-10">
-        <div class="max-w-2xl mb-10">
+        <div class="max-w-2xl mb-6">
             <h2 class="text-3xl md:text-4xl font-black leading-tight tracking-tight">Thông tin <span class="bg-gradient-to-r from-indigo-500 to-fuchsia-500 bg-clip-text text-transparent">đa chiều</span><br> không giới hạn</h2>
             <div class="h-1 w-20 bg-gradient-to-r from-indigo-500 to-fuchsia-400 rounded-full mt-4"></div>
+        </div>
+
+        <!-- 🆕 Hiển thị tổng số bài báo -->
+        <div class="flex items-center gap-2 mb-8 text-sm font-medium">
+            <span class="px-4 py-1.5 bg-white dark:bg-[#131824] rounded-full border border-slate-200 dark:border-slate-700 shadow-sm">
+                <span id="displayed-count">0</span> bài viết
+                <span id="total-count-indicator" class="hidden text-slate-400 dark:text-slate-500 ml-1">/ <span id="total-count">0</span></span>
+            </span>
+            <span id="filter-note" class="text-slate-400 dark:text-slate-500 text-xs hidden">(đã lọc)</span>
         </div>
 
         <!-- Articles grid with masonry style -->
@@ -221,7 +223,7 @@
         </div>
     </main>
 
-    <!-- Modal nâng cấp (full màn hình + interactive) -->
+    <!-- Modal giữ nguyên -->
     <div id="article-modal" class="fixed inset-0 z-[100] bg-white dark:bg-[#0b0e17] flex flex-col">
         <div id="reading-progress" class="fixed top-0 left-0 z-[120]"></div>
 
@@ -284,6 +286,12 @@
         const searchInput = document.getElementById('search-input');
         const filterContainer = document.getElementById('filter-chips');
 
+        // Elements hiển thị tổng số bài
+        const displayedCountSpan = document.getElementById('displayed-count');
+        const totalCountSpan = document.getElementById('total-count');
+        const totalCountIndicator = document.getElementById('total-count-indicator');
+        const filterNote = document.getElementById('filter-note');
+
         // Dark mode setup
         const darkToggle = document.getElementById('darkModeToggle');
         const setTheme = (isDark) => {
@@ -324,6 +332,8 @@
                 statusEl.innerText = "⚠️ Lỗi kết nối";
                 console.error(err);
                 container.innerHTML = `<div class="col-span-full text-center p-10 text-red-500">Không thể tải tin tức, hãy thử lại</div>`;
+                // Vẫn cập nhật đếm = 0
+                updateCountDisplay(0, articles.length);
             } finally {
                 refreshIcon.classList.remove('animate-spin');
             }
@@ -362,9 +372,166 @@
                 filtered = filtered.filter(art => (art.title_vi || art.original_title || '').toLowerCase().includes(q) || (art.summary_vi || '').toLowerCase().includes(q));
             }
             renderArticles(filtered);
+            // 🆕 Cập nhật hiển thị tổng số
+            updateCountDisplay(filtered.length, articles.length);
+        }
+
+        function updateCountDisplay(filteredCount, totalCount) {
+            displayedCountSpan.textContent = filteredCount;
+            totalCountSpan.textContent = totalCount;
+            
+            if (filteredCount !== totalCount) {
+                totalCountIndicator.classList.remove('hidden');
+                filterNote.classList.remove('hidden');
+            } else {
+                totalCountIndicator.classList.add('hidden');
+                filterNote.classList.add('hidden');
+            }
+            
+            // Nếu không có bài nào sau khi lọc
+            if (filteredCount === 0) {
+                // vẫn hiển thị 0 / total nếu đang lọc, còn không thì chỉ 0
+                if (totalCount > 0 && (currentFilter !== 'all' || searchQuery.trim() !== '')) {
+                    totalCountIndicator.classList.remove('hidden');
+                    filterNote.classList.remove('hidden');
+                }
+            }
         }
 
         function renderArticles(articlesToRender) {
             if(!articlesToRender.length) {
                 container.innerHTML = '';
-                emptyStateDi
+                emptyStateDiv.classList.remove('hidden');
+                return;
+            }
+            emptyStateDiv.classList.add('hidden');
+            container.innerHTML = '';
+            articlesToRender.forEach((article, idx) => {
+                const originalIdx = articles.findIndex(a => a.id === article.id);
+                const card = document.createElement('div');
+                card.className = "card-glass rounded-3xl overflow-hidden group cursor-pointer flex flex-col h-full transition-all duration-300";
+                card.onclick = () => openModal(originalIdx !== -1 ? originalIdx : idx);
+                const title = article.title_vi || article.original_title || 'Tin tức mới';
+                const summary = article.summary_vi || 'Nhấn để khám phá nội dung chi tiết và góc nhìn đa chiều.';
+                const image = article.url_to_image || 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=600';
+                const source = article.source_name || 'Horizon';
+                const date = new Date(article.published_at || article.created_at).toLocaleDateString('vi-VN');
+                card.innerHTML = `
+                    <div class="relative overflow-hidden h-52 shrink-0">
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition duration-700" src="${image}" alt="news" loading="lazy">
+                        <div class="absolute top-3 left-3 bg-black/50 backdrop-blur-sm rounded-full px-2 py-0.5 text-[9px] font-bold text-white uppercase">${escapeHtml(source)}</div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <div class="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500 mb-2">
+                            <span>📅 ${date}</span>
+                        </div>
+                        <h3 class="text-xl font-extrabold leading-tight mb-3 line-clamp-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">${escapeHtml(title)}</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-3 mb-4">${escapeHtml(summary)}</p>
+                        <div class="mt-auto flex justify-between items-center">
+                            <span class="text-[11px] font-bold tracking-wide text-indigo-500 opacity-0 group-hover:opacity-100 transition-all">Đọc chuyên sâu →</span>
+                            <div class="w-8 h-8 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-500 group-hover:bg-indigo-600 group-hover:text-white transition">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Modal handlers (giữ nguyên)
+        let currentArticleIndex = null;
+        function openModal(index) {
+            currentArticleIndex = index;
+            const article = articles[index];
+            if(!article) return;
+            document.getElementById('modal-title').innerText = article.title_vi || article.original_title || 'Không có tiêu đề';
+            document.getElementById('modal-image').src = article.url_to_image || 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800';
+            document.getElementById('modal-source').innerText = article.source_name || 'Horizon';
+            const author = article.author || 'Biên tập viên';
+            document.getElementById('modal-author').innerText = author;
+            document.getElementById('modal-avatar').innerText = author.charAt(0).toUpperCase();
+            document.getElementById('modal-date').innerHTML = new Date(article.published_at || article.created_at).toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            const contentRaw = article.full_content_vi || article.summary_vi || 'Nội dung đang được cập nhật, vui lòng đọc tại nguồn.';
+            const formatted = contentRaw.split('\n').filter(p => p.trim()).map(p => `<p>${escapeHtml(p)}</p>`).join('');
+            document.getElementById('modal-body').innerHTML = formatted;
+            const link = document.getElementById('modal-link');
+            link.href = article.url || '#';
+            const modal = document.getElementById('article-modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            const modalScroll = document.getElementById('modal-content');
+            if(modalScroll) modalScroll.scrollTop = 0;
+            document.getElementById('reading-progress').style.width = '0%';
+            stopTTS();
+
+            document.getElementById('share-modal-btn').onclick = () => {
+                if(navigator.share) {
+                    navigator.share({ title: article.title_vi, text: article.summary_vi, url: article.url });
+                } else {
+                    alert('Chia sẻ: ' + article.url);
+                }
+            };
+        }
+
+        function closeModal() {
+            stopTTS();
+            document.getElementById('article-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateProgress(el) {
+            const winScroll = el.scrollTop;
+            const height = el.scrollHeight - el.clientHeight;
+            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            document.getElementById('reading-progress').style.width = scrolled + "%";
+        }
+
+        function toggleTTS() {
+            if(isSpeaking) { stopTTS(); return; }
+            const title = document.getElementById('modal-title').innerText;
+            const bodyElem = document.getElementById('modal-body');
+            const bodyText = bodyElem.innerText || bodyElem.textContent;
+            const fullText = `${title}. ${bodyText}`;
+            synth.cancel();
+            const utterance = new SpeechSynthesisUtterance(fullText);
+            utterance.lang = 'vi-VN';
+            utterance.rate = 0.95;
+            utterance.onstart = () => {
+                isSpeaking = true;
+                const btn = document.getElementById('tts-button-modal');
+                btn.classList.add('bg-rose-500', 'text-white');
+                const iconSvg = document.getElementById('tts-icon');
+                iconSvg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"></path>';
+            };
+            utterance.onend = () => stopTTS();
+            synth.speak(utterance);
+        }
+
+        function stopTTS() {
+            synth.cancel();
+            isSpeaking = false;
+            const btn = document.getElementById('tts-button-modal');
+            if(btn) btn.classList.remove('bg-rose-500', 'text-white');
+            const iconSvg = document.getElementById('tts-icon');
+            if(iconSvg) iconSvg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>';
+        }
+
+        // search event
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            applyFilterAndRender();
+        });
+
+        // back to top
+        const backBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 600) backBtn.classList.add('show');
+            else backBtn.classList.remove('show');
+        });
+        backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        fetchArticles();
+    </script>
+</body>
+</html>
