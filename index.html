@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News Enjoy - Đăng Nhập UI Perfect for Figma</title>
+    <title>News Enjoy - Đăng Ký UI Perfect for Figma</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
@@ -19,7 +19,7 @@
         .figma-canvas {
             width: 720px;
             height: 1280px;
-            /* Phối màu nền gradient chuyển tiếp từ xám khói sang kem nhạt mượt mà như ảnh gốc */
+            /* Nền gradient chuyển tiếp từ xám khói sang kem nhạt tương thích ảnh gốc */
             background: linear-gradient(180deg, #BCBCB8 0%, #D8D6CD 40%, #EFEFEA 100%);
         }
     </style>
@@ -32,10 +32,10 @@
             <button class="text-slate-800 text-2xl p-2 -ml-2 hover:opacity-70 cursor-pointer absolute left-0">
                 <i class="fa-solid fa-arrow-left"></i>
             </button>
-            <h1 class="serif-title text-3xl font-bold text-slate-950 mx-auto tracking-tight">Đăng nhập</h1>
+            <h1 class="serif-title text-3xl font-bold text-slate-950 mx-auto tracking-tight">Đăng ký</h1>
         </div>
 
-        <div class="flex-1 flex flex-col items-center justify-center px-4 space-y-8 -mt-12">
+        <div class="flex-1 flex flex-col items-center justify-center px-4 space-y-7 -mt-8">
             
             <div class="w-36 h-36 bg-white rounded-[40px] shadow-md border border-white/40 flex flex-col items-center justify-center p-4">
                 <div class="w-16 h-16 text-red-400 text-5xl flex items-center justify-center">
@@ -45,11 +45,18 @@
             </div>
 
             <div class="text-center space-y-2">
-                <h2 class="text-slate-900 font-bold text-3xl tracking-tight">Chào mừng trở lại</h2>
-                <p class="text-gray-500 text-base font-medium">Đăng nhập để tiếp tục đọc tin tức</p>
+                <h2 class="text-slate-900 font-bold text-3xl tracking-tight">Tạo tài khoản mới</h2>
+                <p class="text-gray-500 text-base font-medium">Tham gia để trải nghiệm trọn vẹn</p>
             </div>
 
-            <div class="w-full space-y-4 pt-2">
+            <div class="w-full space-y-4 pt-1">
+                <div class="relative w-full">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-5 text-gray-500 text-xl">
+                        <i class="fa-regular fa-user"></i>
+                    </span>
+                    <input type="text" placeholder="Họ và tên" class="w-full bg-white/90 border border-white/20 py-4.5 pl-14 pr-5 rounded-2xl text-base text-gray-800 placeholder-gray-400 focus:outline-none shadow-xs">
+                </div>
+
                 <div class="relative w-full">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-5 text-gray-500 text-xl">
                         <i class="fa-regular fa-envelope"></i>
@@ -65,14 +72,14 @@
                 </div>
             </div>
 
-            <div class="w-full pt-2">
+            <div class="w-full pt-1">
                 <button class="w-full bg-[#0F172A] text-white py-4.5 rounded-2xl text-lg font-bold hover:bg-slate-800 transition shadow-md active:scale-[0.99] cursor-pointer">
-                    Đăng nhập
+                    Đăng ký
                 </button>
             </div>
 
             <p class="text-gray-500 text-base font-medium">
-                Chưa có tài khoản? <span class="text-slate-950 font-bold hover:underline cursor-pointer">Đăng ký ngay</span>
+                Đã có tài khoản? <span class="text-slate-950 font-bold hover:underline cursor-pointer">Đăng nhập</span>
             </p>
 
         </div>
@@ -83,5 +90,3 @@
 
 </body>
 </html>
-
-
