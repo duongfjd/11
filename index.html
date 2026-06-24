@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News Enjoy UI Update for Figma</title>
+    <title>News Enjoy - Tất Cả Tin UI Perfect for Figma</title>
     <!-- Thư viện icon FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* Ép cứng khung hình chuẩn 720x1280 để clone vào Figma không bị lệch */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .serif-title {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+        /* Ép cứng khung hình chuẩn 720x1280 theo yêu cầu */
         .figma-canvas {
             width: 720px;
             height: 1280px;
-            background-color: #F7F6F0; /* Màu nền kem nhạt */
+            background-color: #F6F4EB; /* Màu nền kem nhạt từ ảnh gốc */
         }
-        /* Ẩn thanh scrollbar để giao diện mượt mà khi import */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -25,137 +32,125 @@
         }
     </style>
 </head>
-<body class="bg-gray-800 flex justify-center items-center min-h-screen">
+<body class="bg-gray-900 flex justify-center items-center min-h-screen">
 
     <!-- KHUNG MÀN HÌNH CHUẨN 720x1280 -->
     <div class="figma-canvas relative flex flex-col justify-between overflow-hidden shadow-2xl p-6">
         
-        <!-- PHẦN NỘI DUNG TRÊN (CHO PHÉP SCROLL NẾU QUÁ DÀI) -->
+        <!-- PHẦN NỘI DUNG LIST TIN (SCROLLABLE) -->
         <div class="flex-1 overflow-y-auto space-y-6 pb-28 no-scrollbar">
             
-            <!-- HEADER (Logo, Tên app, Ngày tháng, Chuông) -->
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-3">
-                    <div class="w-14 h-14 bg-white rounded-xl shadow-xs flex items-center justify-center border border-gray-100">
-                        <i class="fa-solid fa-square-rss text-red-400 text-2xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-3xl font-extrabold text-slate-800 tracking-tight">News Enjoy</h1>
-                        <p class="text-base text-gray-500 mt-0.5">Thứ Tư, 24 tháng 6, 2026</p>
-                    </div>
-                </div>
-                <button class="w-12 h-12 bg-gray-200/60 rounded-full flex items-center justify-center text-slate-700">
-                    <i class="fa-regular fa-bell text-xl"></i>
-                </button>
+            <!-- TIÊU ĐỀ TRANG -->
+            <div class="pt-4">
+                <h1 class="serif-title text-4xl font-extrabold text-slate-950 tracking-tight">Tất cả tin</h1>
             </div>
 
-            <!-- THANH TÌM KIẾM -->
-            <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
-                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
-                </span>
-                <input type="text" placeholder="Tìm kiếm tin tức..." class="w-full bg-gray-200/50 py-4 pl-12 pr-4 rounded-2xl text-lg text-gray-700 placeholder-gray-400 focus:outline-none">
-            </div>
-
-            <!-- DANH MỤC (CATEGORIES) -->
-            <div class="flex space-x-3 overflow-x-auto pb-1 text-base font-medium no-scrollbar">
-                <span class="px-6 py-2.5 bg-gray-300 text-slate-800 rounded-full shrink-0">Tất cả</span>
-                <span class="px-6 py-2.5 border border-gray-300 text-gray-600 rounded-full shrink-0">Chính trị</span>
-                <span class="px-6 py-2.5 border border-gray-300 text-gray-600 rounded-full shrink-0">Kinh doanh</span>
-                <span class="px-6 py-2.5 border border-gray-300 text-gray-600 rounded-full shrink-0">Công nghệ</span>
-                <span class="px-6 py-2.5 border border-gray-300 text-gray-600 rounded-full shrink-0">Sức khỏe</span>
-            </div>
-
-            <!-- TIN NỔI BẬT (BANNER LỚN) -->
-            <div class="relative rounded-3xl overflow-hidden shadow-sm aspect-video bg-slate-700">
-                <img src="https://images.unsplash.com/photo-1546422904-90eab23c3d7e?w=800" alt="Tin nóng" class="w-full h-full object-cover mix-blend-overlay opacity-80">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-5 flex flex-col justify-end space-y-2">
-                    <span class="self-start bg-slate-900/90 text-white text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Tin nóng</span>
-                    <h2 class="text-white font-bold text-xl leading-snug">Chính trường Anh chao đảo: Nguyên nhân sâu xa của cuộc khủng hoảng liên miên</h2>
-                    <p class="text-gray-300 text-xs">VnExpress • Thế giới</p>
-                </div>
-            </div>
-
-            <!-- SECTION 1: TIN MỚI NHẤT (Cập nhật nội dung theo ảnh image_6d304b.jpg) -->
+            <!-- DANH SÁCH TIN TỨC (Bám sát ảnh image_6d9dc3.jpg) -->
             <div class="space-y-4">
-                <div class="flex justify-between items-baseline">
-                    <h3 class="text-2xl font-bold text-slate-800">Tin mới nhất</h3>
-                    <span class="text-sm font-medium text-gray-500">Xem tất cả</span>
-                </div>
-
-                <div class="space-y-4">
-                    <!-- Tin mới 1 -->
-                    <div class="flex space-x-4 items-start">
-                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=300" class="w-32 h-22 object-cover rounded-2xl shrink-0 bg-gray-300">
-                        <div class="space-y-1.5">
-                            <h4 class="font-bold text-slate-800 text-base leading-snug line-clamp-2">Cơn sốt MLCC tại Trung Quốc: Tụ điện gốm đa lớp trở thành "hàng nóng" trong làn sóng AI</h4>
-                            <div class="flex items-center space-x-2 text-xs text-gray-500">
-                                <span class="bg-gray-200/80 px-2 py-0.5 rounded-sm text-gray-700 font-medium">VnExpress</span>
-                                <span>23/06/2026</span>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="border-gray-200/60">
-                    
-                    <!-- Tin mới 2 -->
-                    <div class="flex space-x-4 items-start">
-                        <img src="https://images.unsplash.com/photo-1508847154043-be12a3b6f8c9?w=300" class="w-32 h-22 object-cover rounded-2xl shrink-0 bg-gray-300">
-                        <div class="space-y-1.5">
-                            <h4 class="font-bold text-slate-800 text-base leading-snug line-clamp-2">Cảnh sát Canada thiệt mạng trong vụ xả súng tại Montreal: Một sĩ quan bị giết, nghi phạm bị tiêu diệt</h4>
-                            <div class="flex items-center space-x-2 text-xs text-gray-500">
-                                <span class="bg-gray-200/80 px-2 py-0.5 rounded-sm text-gray-700 font-medium">VnExpress</span>
-                                <span>23/06/2026</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECTION 2: ĐỀ XUẤT CHO BẠN (Phần mới bổ sung dựa theo ảnh image_6d304b.jpg) -->
-            <div class="space-y-4 pt-2">
-                <h3 class="text-2xl font-bold text-slate-800">Đề xuất cho bạn</h3>
                 
-                <!-- Giao diện thẻ dạng Grid 2 cột -->
-                <div class="grid grid-cols-2 gap-4">
-                    <!-- Thẻ đề xuất 1 - Sức khỏe -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xs border border-gray-100 flex flex-col">
-                        <img src="https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?w=300" class="w-full h-32 object-cover bg-gray-200">
-                        <div class="p-4 space-y-1 flex-1 flex flex-col justify-between">
-                            <span class="text-xs font-bold text-amber-600 tracking-wider uppercase">Sức khỏe</span>
-                            <h4 class="font-bold text-slate-800 text-base leading-snug line-clamp-2 mt-1">Lợi ích tuyệt vời từ việc uống trà xanh mỗi ngày...</h4>
-                        </div>
-                    </div>
-
-                    <!-- Thẻ đề xuất 2 - Thể thao -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xs border border-gray-100 flex flex-col">
-                        <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=300" class="w-full h-32 object-cover bg-gray-200">
-                        <div class="p-4 space-y-1 flex-1 flex flex-col justify-between">
-                            <span class="text-xs font-bold text-amber-600 tracking-wider uppercase">Thể thao</span>
-                            <h4 class="font-bold text-slate-800 text-base leading-snug line-clamp-2 mt-1">Hành trình lịch sử và phong độ đỉnh cao của siêu sao Cristiano Ronaldo...</h4>
+                <!-- Tin 1 -->
+                <div class="flex space-x-4 items-start">
+                    <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=300" class="w-28 h-20 object-cover rounded-xl shrink-0">
+                    <div class="space-y-1.5 flex-1">
+                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Những thay đổi quan trọng trong chính sách y tế có hiệu lực từ 1/7: Hỗ trợ sinh sản, kéo dài thai sản và xử lý tiết lộ gi...</h2>
+                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
+                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">VnExpress</span>
+                            <span>23/06/2026</span>
                         </div>
                     </div>
                 </div>
-            </div>
+                <hr class="border-gray-200/50">
 
+                <!-- Tin 2 -->
+                <div class="flex space-x-4 items-start">
+                    <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=300" class="w-28 h-20 object-cover rounded-xl shrink-0">
+                    <div class="space-y-1.5 flex-1">
+                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Ford đứng trước nguy cơ "khai tử" Mustang Mach-E khi không dùng nền tảng EV mới</h2>
+                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
+                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">VnExpress</span>
+                            <span>23/06/2026</span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-gray-200/50">
+
+                <!-- Tin 3 -->
+                <div class="flex space-x-4 items-start">
+                    <img src="https://images.unsplash.com/photo-1546422904-90eab23c3d7e?w=300" class="w-28 h-20 object-cover rounded-xl shrink-0">
+                    <div class="space-y-1.5 flex-1">
+                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Chính trường Anh chao đảo: Nguyên nhân sâu xa của cuộc khủng hoảng liên miên</h2>
+                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
+                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">VnExpress</span>
+                            <span>23/06/2026</span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-gray-200/50">
+
+                <!-- Tin 4 -->
+                <div class="flex space-x-4 items-start">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=300" class="w-28 h-20 object-cover rounded-xl shrink-0">
+                    <div class="space-y-1.5 flex-1">
+                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Cơn sốt MLCC tại Trung Quốc: Tụ điện gốm đa lớp trở thành "hàng nóng" trong làn sóng AI</h2>
+                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
+                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">VnExpress</span>
+                            <span>23/06/2026</span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-gray-200/50">
+
+                <!-- Tin 5 -->
+                <div class="flex space-x-4 items-start">
+                    <div class="w-28 h-20 bg-amber-100 rounded-xl shrink-0 flex items-center justify-center overflow-hidden">
+                        <i class="fa-solid fa-user-tie text-amber-700 text-3xl"></i>
+                    </div>
+                    <div class="space-y-1.5 flex-1">
+                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Lễ tuyên chân phước linh mục Trương Bửu Diệp: Hơn 70.000 người dự sự kiện lịch sử tại Tắc Sậy</h2>
+                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
+                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">VnExpress</span>
+                            <span>23/06/2026</span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-gray-200/50">
+
+                <!-- Tin 6 (Bị che mờ một phần ở dưới thanh điều hướng giống ảnh thực tế) -->
+                <div class="flex space-x-4 items-start opacity-40">
+                    <img src="https://images.unsplash.com/photo-1508847154043-be12a3b6f8c9?w=300" class="w-28 h-20 object-cover rounded-xl shrink-0">
+                    <div class="space-y-1.5 flex-1">
+                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Cảnh sát Canada thiệt mạng trong vụ xả súng tại Montreal: Một sĩ quan bị giết...</h2>
+                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
+                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">VnExpress</span>
+                            <span>23/06/2026</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <!-- BOTTOM NAVIGATION BAR (Cố định ở đáy) -->
-        <div class="absolute bottom-6 left-6 right-6 bg-white/80 backdrop-blur-md rounded-3xl shadow-lg border border-white/40 h-20 flex justify-around items-center px-4 z-10">
+        <!-- BOTTOM NAVIGATION BAR (Đã active nút "Tất cả tin") -->
+        <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md rounded-3xl shadow-xl border border-white/40 h-20 flex justify-around items-center px-4 z-10">
+            <!-- Trang chủ -->
+            <div class="flex flex-col items-center justify-center text-gray-400 cursor-pointer">
+                <i class="fa-regular fa-house-chimney text-lg"></i>
+                <span class="text-[11px] font-medium mt-1.5">Trang chủ</span>
+            </div>
+            <!-- Tất cả tin (Active - Màu xanh dương) -->
             <div class="flex flex-col items-center justify-center text-blue-500 cursor-pointer">
-                <i class="fa-solid fa-house text-xl"></i>
-                <span class="text-xs font-bold mt-1">Trang chủ</span>
+                <i class="fa-solid fa-rectangle-list text-lg"></i>
+                <span class="text-[11px] font-bold mt-1.5">Tất cả tin</span>
             </div>
+            <!-- Đã lưu -->
             <div class="flex flex-col items-center justify-center text-gray-400 cursor-pointer">
-                <i class="fa-regular fa-newspaper text-xl"></i>
-                <span class="text-xs font-medium mt-1">Tất cả tin</span>
+                <i class="fa-regular fa-bookmark text-lg"></i>
+                <span class="text-[11px] font-medium mt-1.5">Đã lưu</span>
             </div>
+            <!-- Hồ sơ -->
             <div class="flex flex-col items-center justify-center text-gray-400 cursor-pointer">
-                <i class="fa-regular fa-bookmark text-xl"></i>
-                <span class="text-xs font-medium mt-1">Đã lưu</span>
-            </div>
-            <div class="flex flex-col items-center justify-center text-gray-400 cursor-pointer">
-                <i class="fa-regular fa-user text-xl"></i>
-                <span class="text-xs font-medium mt-1">Hồ sơ</span>
+                <i class="fa-regular fa-user text-lg"></i>
+                <span class="text-[11px] font-medium mt-1.5">Hồ sơ</span>
             </div>
         </div>
 
