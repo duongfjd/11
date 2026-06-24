@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News Enjoy - Tất Cả Tin UI Perfect for Figma</title>
+    <title>News Enjoy - Đã Lưu UI Perfect for Figma</title>
     <!-- Thư viện icon FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Tailwind CSS CDN -->
@@ -17,18 +17,11 @@
         .serif-title {
             font-family: 'Playfair Display', Georgia, serif;
         }
-        /* Ép cứng khung hình chuẩn 720x1280 theo yêu cầu */
+        /* Ép cứng khung hình chuẩn 720x1280 để clone vào Figma không bị lệch */
         .figma-canvas {
             width: 720px;
             height: 1280px;
             background-color: #F6F4EB; /* Màu nền kem nhạt từ ảnh gốc */
-        }
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
         }
     </style>
 </head>
@@ -37,115 +30,45 @@
     <!-- KHUNG MÀN HÌNH CHUẨN 720x1280 -->
     <div class="figma-canvas relative flex flex-col justify-between overflow-hidden shadow-2xl p-6">
         
-        <!-- PHẦN NỘI DUNG LIST TIN (SCROLLABLE) -->
-        <div class="flex-1 overflow-y-auto space-y-6 pb-28 no-scrollbar">
-            
-            <!-- TIÊU ĐỀ TRANG -->
-            <div class="pt-4">
-                <h1 class="serif-title text-4xl font-extrabold text-slate-950 tracking-tight">Tất cả tin</h1>
-            </div>
-
-            <!-- DANH SÁCH TIN TỨC (Bám sát ảnh image_6d9dc3.jpg) -->
-            <div class="space-y-4">
-                
-                <!-- Tin 1 -->
-                <div class="flex space-x-4 items-start">
-                    <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=300" class="w-28 h-20 object-cover rounded-xl shrink-0">
-                    <div class="space-y-1.5 flex-1">
-                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Những thay đổi quan trọng trong chính sách y tế có hiệu lực từ 1/7: Hỗ trợ sinh sản, kéo dài thai sản và xử lý tiết lộ gi...</h2>
-                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
-                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">VnExpress</span>
-                            <span>23/06/2026</span>
-                        </div>
-                    </div>
-                </div>
-                <hr class="border-gray-200/50">
-
-                <!-- Tin 2 -->
-                <div class="flex space-x-4 items-start">
-                    <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=300" class="w-28 h-20 object-cover rounded-xl shrink-0">
-                    <div class="space-y-1.5 flex-1">
-                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Ford đứng trước nguy cơ "khai tử" Mustang Mach-E khi không dùng nền tảng EV mới</h2>
-                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
-                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">VnExpress</span>
-                            <span>23/06/2026</span>
-                        </div>
-                    </div>
-                </div>
-                <hr class="border-gray-200/50">
-
-                <!-- Tin 3 -->
-                <div class="flex space-x-4 items-start">
-                    <img src="https://images.unsplash.com/photo-1546422904-90eab23c3d7e?w=300" class="w-28 h-20 object-cover rounded-xl shrink-0">
-                    <div class="space-y-1.5 flex-1">
-                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Chính trường Anh chao đảo: Nguyên nhân sâu xa của cuộc khủng hoảng liên miên</h2>
-                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
-                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">VnExpress</span>
-                            <span>23/06/2026</span>
-                        </div>
-                    </div>
-                </div>
-                <hr class="border-gray-200/50">
-
-                <!-- Tin 4 -->
-                <div class="flex space-x-4 items-start">
-                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=300" class="w-28 h-20 object-cover rounded-xl shrink-0">
-                    <div class="space-y-1.5 flex-1">
-                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Cơn sốt MLCC tại Trung Quốc: Tụ điện gốm đa lớp trở thành "hàng nóng" trong làn sóng AI</h2>
-                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
-                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">VnExpress</span>
-                            <span>23/06/2026</span>
-                        </div>
-                    </div>
-                </div>
-                <hr class="border-gray-200/50">
-
-                <!-- Tin 5 -->
-                <div class="flex space-x-4 items-start">
-                    <div class="w-28 h-20 bg-amber-100 rounded-xl shrink-0 flex items-center justify-center overflow-hidden">
-                        <i class="fa-solid fa-user-tie text-amber-700 text-3xl"></i>
-                    </div>
-                    <div class="space-y-1.5 flex-1">
-                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Lễ tuyên chân phước linh mục Trương Bửu Diệp: Hơn 70.000 người dự sự kiện lịch sử tại Tắc Sậy</h2>
-                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
-                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">VnExpress</span>
-                            <span>23/06/2026</span>
-                        </div>
-                    </div>
-                </div>
-                <hr class="border-gray-200/50">
-
-                <!-- Tin 6 (Bị che mờ một phần ở dưới thanh điều hướng giống ảnh thực tế) -->
-                <div class="flex space-x-4 items-start opacity-40">
-                    <img src="https://images.unsplash.com/photo-1508847154043-be12a3b6f8c9?w=300" class="w-28 h-20 object-cover rounded-xl shrink-0">
-                    <div class="space-y-1.5 flex-1">
-                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Cảnh sát Canada thiệt mạng trong vụ xả súng tại Montreal: Một sĩ quan bị giết...</h2>
-                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
-                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">VnExpress</span>
-                            <span>23/06/2026</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+        <!-- TIÊU ĐỀ TRANG -->
+        <div class="pt-4 self-start w-full">
+            <h1 class="serif-title text-4xl font-extrabold text-slate-950 tracking-tight">Đã lưu</h1>
         </div>
 
-        <!-- BOTTOM NAVIGATION BAR (Đã active nút "Tất cả tin") -->
+        <!-- TRẠNG THÁI CHƯA ĐĂNG NHẬP (CENTER CONTENT) -->
+        <div class="flex-1 flex flex-col items-center justify-center space-y-6 -mt-20">
+            <!-- Icon Ổ khóa lớn màu xám nhạt -->
+            <div class="text-gray-300 text-8xl mb-2">
+                <i class="fa-regular fa-lock"></i>
+            </div>
+            
+            <!-- Dòng chữ thông báo -->
+            <p class="text-gray-400 text-lg font-medium tracking-wide">
+                Đăng nhập để xem bài viết đã lưu
+            </p>
+            
+            <!-- Nút Đăng nhập -->
+            <button class="bg-[#0F172A] text-white px-8 py-3 rounded-full text-base font-semibold hover:bg-slate-800 transition shadow-xs cursor-pointer">
+                Đăng nhập
+            </button>
+        </div>
+
+        <!-- BOTTOM NAVIGATION BAR (Đã active nút "Đã lưu") -->
         <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md rounded-3xl shadow-xl border border-white/40 h-20 flex justify-around items-center px-4 z-10">
             <!-- Trang chủ -->
             <div class="flex flex-col items-center justify-center text-gray-400 cursor-pointer">
                 <i class="fa-regular fa-house-chimney text-lg"></i>
                 <span class="text-[11px] font-medium mt-1.5">Trang chủ</span>
             </div>
-            <!-- Tất cả tin (Active - Màu xanh dương) -->
-            <div class="flex flex-col items-center justify-center text-blue-500 cursor-pointer">
-                <i class="fa-solid fa-rectangle-list text-lg"></i>
-                <span class="text-[11px] font-bold mt-1.5">Tất cả tin</span>
-            </div>
-            <!-- Đã lưu -->
+            <!-- Tất cả tin -->
             <div class="flex flex-col items-center justify-center text-gray-400 cursor-pointer">
-                <i class="fa-regular fa-bookmark text-lg"></i>
-                <span class="text-[11px] font-medium mt-1.5">Đã lưu</span>
+                <i class="fa-regular fa-rectangle-list text-lg"></i>
+                <span class="text-[11px] font-medium mt-1.5">Tất cả tin</span>
+            </div>
+            <!-- Đã lưu (Active - Màu xanh dương) -->
+            <div class="flex flex-col items-center justify-center text-blue-500 cursor-pointer">
+                <i class="fa-solid fa-bookmark text-lg"></i>
+                <span class="text-[11px] font-bold mt-1.5">Đã lưu</span>
             </div>
             <!-- Hồ sơ -->
             <div class="flex flex-col items-center justify-center text-gray-400 cursor-pointer">
