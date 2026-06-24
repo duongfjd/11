@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News Enjoy - Đăng Ký UI Perfect for Figma</title>
+    <title>News Enjoy - Đã Lưu (Danh Sách) UI for Figma</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
@@ -19,8 +19,14 @@
         .figma-canvas {
             width: 720px;
             height: 1280px;
-            /* Nền gradient chuyển tiếp từ xám khói sang kem nhạt tương thích ảnh gốc */
-            background: linear-gradient(180deg, #BCBCB8 0%, #D8D6CD 40%, #EFEFEA 100%);
+            background-color: #F6F4EB; /* Màu nền kem nhạt từ ảnh gốc */
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
@@ -28,63 +34,100 @@
 
     <div class="figma-canvas relative flex flex-col justify-between overflow-hidden shadow-2xl p-6">
         
-        <div class="flex items-center pt-4 w-full relative">
-            <button class="text-slate-800 text-2xl p-2 -ml-2 hover:opacity-70 cursor-pointer absolute left-0">
-                <i class="fa-solid fa-arrow-left"></i>
-            </button>
-            <h1 class="serif-title text-3xl font-bold text-slate-950 mx-auto tracking-tight">Đăng ký</h1>
-        </div>
-
-        <div class="flex-1 flex flex-col items-center justify-center px-4 space-y-7 -mt-8">
+        <div class="flex-1 overflow-y-auto space-y-6 pb-28 no-scrollbar">
             
-            <div class="w-36 h-36 bg-white rounded-[40px] shadow-md border border-white/40 flex flex-col items-center justify-center p-4">
-                <div class="w-16 h-16 text-red-400 text-5xl flex items-center justify-center">
-                    <i class="fa-solid fa-square-rss"></i>
-                </div>
-                <span class="text-[11px] font-extrabold text-slate-800 tracking-wider uppercase mt-2">News Enjoy</span>
+            <div class="pt-4">
+                <h1 class="serif-title text-4xl font-extrabold text-slate-950 tracking-tight">Đã lưu</h1>
             </div>
 
-            <div class="text-center space-y-2">
-                <h2 class="text-slate-900 font-bold text-3xl tracking-tight">Tạo tài khoản mới</h2>
-                <p class="text-gray-500 text-base font-medium">Tham gia để trải nghiệm trọn vẹn</p>
-            </div>
+            <div class="space-y-4">
+                
+                <div class="flex space-x-4 items-start">
+                    <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=300" class="w-28 h-20 object-cover rounded-xl shrink-0 bg-gray-300">
+                    <div class="space-y-1.5 flex-1">
+                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Lynk & Co 900: SUV 6 chỗ hạng sang giá từ 3,069 tỷ đồng đổ bộ Việt Nam</h2>
+                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
+                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">VnExpress</span>
+                            <span>17/06/2026</span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-gray-200/50">
 
-            <div class="w-full space-y-4 pt-1">
-                <div class="relative w-full">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-5 text-gray-500 text-xl">
-                        <i class="fa-regular fa-user"></i>
-                    </span>
-                    <input type="text" placeholder="Họ và tên" class="w-full bg-white/90 border border-white/20 py-4.5 pl-14 pr-5 rounded-2xl text-base text-gray-800 placeholder-gray-400 focus:outline-none shadow-xs">
+                <div class="flex space-x-4 items-start">
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300" class="w-28 h-20 object-cover rounded-xl shrink-0 bg-gray-300">
+                    <div class="space-y-1.5 flex-1">
+                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Google có thể khắc phục "điểm tệ nhất" của passkey trên Android</h2>
+                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
+                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">Android Central</span>
+                            <span>19/05/2026</span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-gray-200/50">
+
+                <div class="flex space-x-4 items-start">
+                    <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=300" class="w-28 h-20 object-cover rounded-xl shrink-0 bg-gray-300">
+                    <div class="space-y-1.5 flex-1">
+                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Tai nghe Beats bất ngờ hỗ trợ các tính năng độc quyền của Android</h2>
+                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
+                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">Android Central</span>
+                            <span>10/05/2026</span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-gray-200/50">
+
+                <div class="flex space-x-4 items-start">
+                    <div class="w-28 h-20 bg-[#121212] rounded-xl shrink-0 flex flex-col items-center justify-center border border-gray-800 p-2">
+                        <span class="text-red-600 font-black text-xl tracking-wider uppercase leading-none">NEWS</span>
+                        <span class="text-[8px] text-gray-500 font-medium mt-1">ẢNH KHÔNG HIỂN THỊ</span>
+                    </div>
+                    <div class="space-y-1.5 flex-1">
+                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Gợi ý, Đáp án và Hỗ trợ Connections của NYT ngày 4 tháng 5, mã số #1058</h2>
+                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
+                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">CNET</span>
+                            <span>03/05/2026</span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-gray-200/50">
+
+                <div class="flex space-x-4 items-start">
+                    <div class="w-28 h-20 bg-[#121212] rounded-xl shrink-0 flex flex-col items-center justify-center border border-gray-800 p-2">
+                        <span class="text-red-600 font-black text-xl tracking-wider uppercase leading-none">NEWS</span>
+                        <span class="text-[8px] text-gray-500 font-medium mt-1">ẢNH KHÔNG HIỂN THỊ</span>
+                    </div>
+                    <div class="space-y-1.5 flex-1">
+                        <h2 class="font-bold text-slate-900 text-[15px] leading-snug line-clamp-3">Camera AI được Triển khai Khắp Miền Tây Nước Mỹ để Phát hiện Sớm Cháy Rừng</h2>
+                        <div class="flex items-center space-x-2 text-[11px] text-gray-400 font-medium">
+                            <span class="bg-gray-200/80 px-1.5 py-0.5 rounded-xs text-gray-600 font-semibold text-[10px]">Slashdot.org</span>
+                            <span>03/05/2026</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="relative w-full">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-5 text-gray-500 text-xl">
-                        <i class="fa-regular fa-envelope"></i>
-                    </span>
-                    <input type="email" placeholder="Email" class="w-full bg-white/90 border border-white/20 py-4.5 pl-14 pr-5 rounded-2xl text-base text-gray-800 placeholder-gray-400 focus:outline-none shadow-xs">
-                </div>
-
-                <div class="relative w-full">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-5 text-gray-500 text-xl">
-                        <i class="fa-regular fa-lock"></i>
-                    </span>
-                    <input type="password" placeholder="Mật khẩu" class="w-full bg-white/90 border border-white/20 py-4.5 pl-14 pr-5 rounded-2xl text-base text-gray-800 placeholder-gray-400 focus:outline-none shadow-xs">
-                </div>
             </div>
-
-            <div class="w-full pt-1">
-                <button class="w-full bg-[#0F172A] text-white py-4.5 rounded-2xl text-lg font-bold hover:bg-slate-800 transition shadow-md active:scale-[0.99] cursor-pointer">
-                    Đăng ký
-                </button>
-            </div>
-
-            <p class="text-gray-500 text-base font-medium">
-                Đã có tài khoản? <span class="text-slate-950 font-bold hover:underline cursor-pointer">Đăng nhập</span>
-            </p>
-
         </div>
 
-        <div class="h-6"></div>
+        <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md rounded-3xl shadow-xl border border-white/40 h-20 flex justify-around items-center px-4 z-10">
+            <div class="flex flex-col items-center justify-center text-gray-400 cursor-pointer">
+                <i class="fa-regular fa-house-chimney text-lg"></i>
+                <span class="text-[11px] font-medium mt-1.5">Trang chủ</span>
+            </div>
+            <div class="flex flex-col items-center justify-center text-gray-400 cursor-pointer">
+                <i class="fa-regular fa-rectangle-list text-lg"></i>
+                <span class="text-[11px] font-medium mt-1.5">Tất cả tin</span>
+            </div>
+            <div class="flex flex-col items-center justify-center text-blue-500 cursor-pointer">
+                <i class="fa-solid fa-bookmark text-lg"></i>
+                <span class="text-[11px] font-bold mt-1.5">Đã lưu</span>
+            </div>
+            <div class="flex flex-col items-center justify-center text-gray-400 cursor-pointer">
+                <i class="fa-regular fa-user text-lg"></i>
+                <span class="text-[11px] font-medium mt-1.5">Hồ sơ</span>
+            </div>
+        </div>
 
     </div>
 
